@@ -7,12 +7,22 @@ module.exports = {
     './tsconfig.json',
     [{}],
   ).parse,
-  require: [
-    path.join(__dirname, 'styleguide/normalize.css'),
-    path.join(__dirname, 'styleguide/reset.css'),
-    path.join(__dirname, 'styleguide/styleguide.css'),
-  ],
+  require: [path.join(__dirname, 'styleguide/styleguide.css')],
   styleguideDir: 'docs',
   title: `Velcrostrip ${pkg.version}`,
-  webpackConfig: require('./styleguide/webpack.config.js'),
+  webpackConfig: {
+    module: {
+      rules: [
+        {
+          exclude: /node_modules/,
+          loader: 'babel-loader',
+          test: /\.tsx?$/,
+        },
+        {
+          loader: 'style-loader!css-loader',
+          test: /\.css$/,
+        },
+      ],
+    },
+  },
 }

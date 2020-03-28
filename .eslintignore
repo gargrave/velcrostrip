@@ -1,6 +1,7 @@
 /dist
 /lib
 /node_modules
+/styleguide
 
 jest.config.js
 rollup.config.js
