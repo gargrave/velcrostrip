@@ -1,0 +1,69 @@
+{
+  "name": "@gargrave/ts-module-starter",
+  "version": "0.1.0",
+  "description": "A basic setup for an NPM package built with TypeScript",
+  "author": "Gabe Hargrave <gkhargrave@gmail.com>",
+  "main": "dist/ts-module-starter.cjs.js",
+  "module": "dist/ts-module-starter.esm.js",
+  "browser": "dist/ts-module-starter.umd.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "lib"
+  ],
+  "scripts": {
+    "clean:dist": "yarn rimraf dist",
+    "clean:lib": "yarn rimraf lib",
+    "prebuild": "jest && yarn clean:dist && yarn build:lib && yarn build:types",
+    "build": "rollup -c",
+    "build:lib": "yarn clean:lib && tsc --outDir 'lib'",
+    "build:types": "tsc --emitDeclarationOnly",
+    "release": "yarn build && yarn np --yolo",
+    "lint": "eslint --ext .ts,.tsx ./src",
+    "test": "jest --watch"
+  },
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.9.0",
+    "@babel/plugin-proposal-class-properties": "^7.8.3",
+    "@babel/plugin-transform-runtime": "^7.9.0",
+    "@babel/preset-env": "^7.9.0",
+    "@babel/preset-react": "^7.9.4",
+    "@babel/preset-typescript": "^7.9.0",
+    "@testing-library/jest-dom": "^5.3.0",
+    "@testing-library/react": "^10.0.1",
+    "@types/jest": "^25.1.4",
+    "@types/react": "^16.8.0",
+    "@types/react-dom": "^16.8.0",
+    "@typescript-eslint/eslint-plugin": "^2.25.0",
+    "@typescript-eslint/parser": "^2.25.0",
+    "babel-eslint": "^10.1.0",
+    "babel-jest": "^25.2.3",
+    "eslint": "^6.8.0",
+    "eslint-config-prettier": "^6.10.1",
+    "eslint-plugin-import": "^2.20.1",
+    "eslint-plugin-react": "^7.19.0",
+    "husky": "^4.2.3",
+    "jest": "^25.2.3",
+    "np": "^6.2.0",
+    "prettier": "^2.0.2",
+    "pretty-quick": "^2.0.1",
+    "react": "^16.13.1",
+    "react-dom": "^16.13.1",
+    "rimraf": "^3.0.2",
+    "rollup": "^2.2.0",
+    "rollup-plugin-babel": "^4.4.0",
+    "rollup-plugin-commonjs": "^10.1.0",
+    "rollup-plugin-node-resolve": "^5.2.0",
+    "typescript": "^3.8.3"
+  },
+  "peerDependencies": {
+    "react": "^16.8.0",
+    "react-dom": "^16.8.0"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "pretty-quick --staged"
+    }
+  }
+}
