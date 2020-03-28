@@ -1119,6 +1119,11 @@
   resolved "https://registry.yarnpkg.com/@emotion/weak-memoize/-/weak-memoize-0.2.5.tgz#8eed982e2ee6f7f4e44c253e12962980791efd46"
   integrity sha512-6U71C2Wp7r5XtFtQzYrW5iKFT67OixrSxjI4MptCHzdSVlgabczzqLe0ZSgnub/5Kp4hSbpDB1tMytZY9pwxxA==
 
+"@gargrave/garlib@^0.0.4":
+  version "0.0.4"
+  resolved "https://registry.yarnpkg.com/@gargrave/garlib/-/garlib-0.0.4.tgz#c01663b11dbb52578cd26bc74bad0cb585067be2"
+  integrity sha512-N4IWncZmUUlIZ1piki3+bE+kLbKYuEUNdkbx7ZUK/5Mh7yNNCCZwPNBavL0YjSQhG8URILCdDK5XBRHBdARZlg==
+
 "@istanbuljs/load-nyc-config@^1.0.0":
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/@istanbuljs/load-nyc-config/-/load-nyc-config-1.0.0.tgz#10602de5570baea82f8afbfa2630b24e7a8cfe5b"

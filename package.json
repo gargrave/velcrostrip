@@ -25,6 +25,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@gargrave/garlib": "^0.0.4",
     "emotion": "^10.0.27",
     "polished": "^3.5.1",
     "ramda": "^0.27.0",
