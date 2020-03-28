@@ -1,6 +1,6 @@
 {
   "name": "@gargrave/velcrostrip",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "A modest, general-use React UI component library",
   "author": "Gabe Hargrave <gkhargrave@gmail.com>",
   "main": "dist/velcrostrip.cjs.js",
