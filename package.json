@@ -29,9 +29,11 @@
     "@gargrave/garlib": "^0.0.5",
     "emotion": "^10.0.27",
     "polished": "^3.5.1",
-    "ramda": "^0.27.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "ramda": "^0.27.0"
+  },
+  "peerDependencies": {
+    "react": "^16.13.0",
+    "react-dom": "^16.13.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
@@ -58,7 +60,9 @@
     "np": "^5.2.1",
     "prettier": "^2.0.2",
     "pretty-quick": "^2.0.1",
+    "react": "^16.13.0",
     "react-docgen-typescript": "^1.16.3",
+    "react-dom": "^16.13.0",
     "react-styleguidist": "^11.0.4",
     "rimraf": "^3.0.2",
     "rollup": "^2.2.0",

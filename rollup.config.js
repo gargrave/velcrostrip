@@ -26,6 +26,7 @@ export default [
       },
     ],
     external: [
+      '@babel/runtime/helpers/typeof',
       'react',
       'object-assign',
       'prop-types/checkPropTypes',
