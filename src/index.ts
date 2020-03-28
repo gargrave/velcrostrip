@@ -1,2 +1,2 @@
-export * from './classes'
-export * from './react-components'
+export * from './Alert'
+export * from './styles'
