@@ -25,10 +25,15 @@ export default [
         name: 'tsModuleStarter',
       },
     ],
-    external: ['react', 'object-assign', 'prop-types/checkPropTypes'],
+    external: [
+      'react',
+      'object-assign',
+      'prop-types/checkPropTypes',
+      '@gargrave/garlib',
+    ],
     plugins: [
       resolve({
-        extensions: ['.ts', '.tsx'],
+        extensions: ['.js', '.ts', '.tsx'],
       }),
       commonjs({
         namedExports: { react: ['createElement'] },

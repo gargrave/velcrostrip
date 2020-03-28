@@ -1,11 +1,11 @@
 {
-  "name": "@gargrave/ts-module-starter",
-  "version": "0.1.0",
-  "description": "A basic setup for an NPM package built with TypeScript",
+  "name": "@gargrave/velcrostrip",
+  "version": "0.0.0",
+  "description": "A modest, general-use React UI component library",
   "author": "Gabe Hargrave <gkhargrave@gmail.com>",
-  "main": "dist/ts-module-starter.cjs.js",
-  "module": "dist/ts-module-starter.esm.js",
-  "browser": "dist/ts-module-starter.umd.js",
+  "main": "dist/velcrostrip.cjs.js",
+  "module": "dist/velcrostrip.esm.js",
+  "browser": "dist/velcrostrip.umd.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist",
@@ -25,7 +25,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "@gargrave/garlib": "^0.0.4",
+    "@gargrave/garlib": "^0.0.5",
     "emotion": "^10.0.27",
     "polished": "^3.5.1",
     "ramda": "^0.27.0",
