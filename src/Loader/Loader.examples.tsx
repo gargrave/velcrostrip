@@ -108,8 +108,11 @@ const LoaderExamples: React.FC = () => {
   return (
     <>
       <BasicLoaders />
+      <hr />
       <Sizes />
+      <hr />
       <InnerSize />
+      <hr />
       <LoaderShapes />
     </>
   )

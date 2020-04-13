@@ -11,12 +11,6 @@ type AlertStyles = {
   closeButton: string
 }
 
-type ThemeOverrides = {
-  bgOffset?: number
-  borderOffset?: number
-  textOffset?: number
-}
-
 const alertBase = css`
   border-radius: 0.25rem;
   margin-bottom: 1.5rem;

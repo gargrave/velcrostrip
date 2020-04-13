@@ -9,6 +9,12 @@ module.exports = {
   ).parse,
   require: [path.join(__dirname, 'styleguide/styleguide.css')],
   styleguideDir: 'docs',
+  styles: path.join(__dirname, 'styleguide/styles.js'),
+  theme: {
+    fontSize: {
+      h2: 32,
+    },
+  },
   title: `Velcrostrip ${pkg.version}`,
   webpackConfig: {
     module: {

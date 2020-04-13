@@ -36,5 +36,6 @@ For styling, all of the components use the excellent [emotion](https://emotion.s
 ## TODO
 
 - Host the styleguide/demo
+  - Setup styleguide build process
 - Notes/demos for custom styling/theming
 - Continue importing more loader types

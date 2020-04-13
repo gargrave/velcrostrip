@@ -33,6 +33,7 @@ const AlertExamples: React.FC = () => {
       <Alert type={StyleTheme.Warning}>This is a Warning alert.</Alert>
       <Alert type={StyleTheme.Danger}>This is a Danger alert.</Alert>
 
+      <hr />
       <h3>Dismissable</h3>
       {dismissed ? (
         <div onClick={handleUnDismiss} style={unDismissStyles}>

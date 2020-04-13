@@ -152,9 +152,13 @@ const ButtonExamples: React.FC = React.memo(() => {
   return (
     <>
       <BasicButtons />
+      <hr />
       <DisabledButtons />
+      <hr />
       <OutlineButtons />
+      <hr />
       <BlockButtons />
+      <hr />
       <LoaderButtons />
     </>
   )
