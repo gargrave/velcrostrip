@@ -99,6 +99,13 @@
         "@typescript-eslint/no-non-null-assertion": "off",
         "@typescript-eslint/no-object-literal-type-assertion": "off"
       }
+    },
+
+    {
+      "files": ["*.examples.tsx"],
+      "rules": {
+        "no-console": "off"
+      }
     }
   ]
 }

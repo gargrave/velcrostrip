@@ -17,10 +17,7 @@ const card = () => {
     background-color: ${bgColor};
     border-radius: 2px;
     border: solid 1px ${borderColor};
-    margin: 8px auto;
-    max-width: 800px;
-    padding: 12px 24px;
-    text-align: center;
+    padding: 24px;
     transition: all 200ms ease;
   `
 }
