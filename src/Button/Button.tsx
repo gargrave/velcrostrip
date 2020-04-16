@@ -13,7 +13,7 @@ export type ButtonProps = {
   buttonType?: ButtonType
   disabled?: boolean
   loading?: boolean
-  onClick: () => void
+  onClick?: () => void
   outline?: boolean
   type?: StyleTheme
 }
