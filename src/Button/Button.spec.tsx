@@ -50,6 +50,45 @@ describe('Button', () => {
     })
   })
 
+  describe('Native button "type" attribute"', () => {
+    it('applies "button" type by default', () => {
+      const { container } = render(
+        <Button {...defaultProps}>Hello There</Button>,
+      )
+      const q = (query) => container.querySelectorAll(query)
+
+      expect(q('button[type="button"]')).toHaveLength(1)
+      expect(q('button[type="submit"]')).toHaveLength(0)
+      expect(q('button[type="reset"]')).toHaveLength(0)
+    })
+
+    it('applies "submit" type when specified by prop', () => {
+      const { container } = render(
+        <Button {...defaultProps} buttonType="submit">
+          Hello There
+        </Button>,
+      )
+      const q = (query) => container.querySelectorAll(query)
+
+      expect(q('button[type="button"]')).toHaveLength(0)
+      expect(q('button[type="submit"]')).toHaveLength(1)
+      expect(q('button[type="reset"]')).toHaveLength(0)
+    })
+
+    it('applies "reset" type when specified by prop', () => {
+      const { container } = render(
+        <Button {...defaultProps} buttonType="reset">
+          Hello There
+        </Button>,
+      )
+      const q = (query) => container.querySelectorAll(query)
+
+      expect(q('button[type="button"]')).toHaveLength(0)
+      expect(q('button[type="submit"]')).toHaveLength(0)
+      expect(q('button[type="reset"]')).toHaveLength(1)
+    })
+  })
+
   describe('Conditional rendering', () => {
     it('renders a disabled button when prop is true', () => {
       const { onClick } = defaultProps

@@ -5,9 +5,12 @@ import { StyleTheme } from '../styles'
 
 import getStyles from './Button.styles'
 
+type ButtonType = 'button' | 'submit' | 'reset'
+
 // TODO: button sizes
 export type ButtonProps = {
   block?: boolean
+  buttonType?: ButtonType
   disabled?: boolean
   loading?: boolean
   onClick: () => void
@@ -18,6 +21,7 @@ export type ButtonProps = {
 export const Button: React.FC<ButtonProps> = React.memo(
   ({
     block = false,
+    buttonType = 'button',
     children,
     disabled = false,
     loading = false,
@@ -35,6 +39,7 @@ export const Button: React.FC<ButtonProps> = React.memo(
         className={styles.button}
         disabled={disabled || loading}
         onClick={onClick}
+        type={buttonType as ButtonType}
       >
         <span className={styles.buttonChildren}>{children}</span>
         <Loader
