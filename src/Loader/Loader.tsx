@@ -78,7 +78,10 @@ export const Loader: React.FC<LoaderProps> = React.memo(
     ])
 
     return (
-      <div className={styles.container} data-testid={loaderTestIds.container}>
+      <div
+        className={classNames(styles.container, className)}
+        data-testid={loaderTestIds.container}
+      >
         {overlay && (
           <div
             className={styles.backdrop}
@@ -86,10 +89,7 @@ export const Loader: React.FC<LoaderProps> = React.memo(
           />
         )}
 
-        <div
-          className={classNames(styles.wrapper, className)}
-          data-testid={loaderTestIds.wrapper}
-        >
+        <div className={styles.wrapper} data-testid={loaderTestIds.wrapper}>
           <div className={styles.loader}>
             {childMapper.map((_, idx) => (
               <div key={idx} />

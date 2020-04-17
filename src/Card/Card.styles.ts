@@ -10,33 +10,31 @@ const bgColor = shade(0.01, colors.base.white)
 const bgColorHover = tint(0.9, colors.theme.primary)
 const borderColor = shade(0.1, bgColor)
 
-const card = () => {
-  return css`
-    ${boxShadowLight};
+const card = css`
+  ${boxShadowLight};
 
-    background-color: ${bgColor};
-    border-radius: 2px;
-    border: solid 1px ${borderColor};
-    padding: 24px;
-    transition: all 200ms ease;
-  `
-}
+  background: ${bgColor};
+  border-radius: 2px;
+  border: solid 1px ${borderColor};
+  padding: 24px;
+  transition: background-color 200ms ease;
 
-const hoverableCard = () => {
-  return css`
-    &:hover {
-      background-color: ${bgColorHover};
-      cursor: pointer;
-    }
-  `
-}
+  & + & {
+    margin-top: 8px;
+  }
+`
+
+const hoverableCard = css`
+  &:hover {
+    background-color: ${bgColorHover};
+    cursor: pointer;
+  }
+`
 
 export default (props: Props) => {
-  const baseCardStyles = card()
-
-  const hoverable = props.hoverable && hoverableCard()
+  const hoverable = props.hoverable && hoverableCard
 
   return {
-    card: [baseCardStyles, cx(hoverable)].join(' '),
+    card: [card, cx(hoverable)].join(' '),
   }
 }

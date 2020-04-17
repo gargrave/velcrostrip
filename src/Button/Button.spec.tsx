@@ -41,7 +41,7 @@ describe('Button', () => {
       expect(btn).not.toHaveStyle('background-color: transparent')
       // shows children and hides loader
       expect(getByText(children)).toHaveStyle('opacity: 1')
-      expect(getByTestId(loaderTestIds.loaderWrapper)).toHaveStyle('opacity: 0')
+      expect(getByTestId(loaderTestIds.container)).toHaveStyle('opacity: 0')
 
       // fires callback when clicked
       expect(onClick).toHaveBeenCalledTimes(0)
@@ -136,7 +136,7 @@ describe('Button', () => {
       expect(btn).toHaveStyle('cursor: default')
 
       // shows loader and hides children
-      expect(getByTestId(loaderTestIds.loaderWrapper)).toHaveStyle('opacity: 1')
+      expect(getByTestId(loaderTestIds.container)).toHaveStyle('opacity: 1')
       expect(getByText(children)).toHaveStyle('opacity: 0')
     })
   })
