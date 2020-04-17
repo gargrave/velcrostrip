@@ -12,15 +12,17 @@ export enum LoaderShape {
 }
 
 export const loaderTestIds = {
-  loaderWrapper: 'loaderWrapper',
+  backdrop: 'loader__backdrop',
+  container: 'loader__container',
+  wrapper: 'loader__wrapper',
 }
 
 const childrenToTypeMap = {
   [LoaderShape.DualRing]: 0,
   [LoaderShape.Ellipsis]: 4,
+  [LoaderShape.SingleRing]: 0,
 }
 
-// TODO: take a data-testid override prop, and prefer it over the default
 export type LoaderProps = {
   /**
    * (Optional) Override base color for the loader. If specified, this will be
@@ -30,6 +32,15 @@ export type LoaderProps = {
   baseColor?: string
   className?: string
   innerSize?: number
+  /**
+   * Whether this Loader should render in "overlay" mode.
+   * This will cause the following changes to rendering:
+   * - The Loader will use "absolute" positioning and fill the parent element
+   * - The Loader will render a backdrop to obscure the parent element
+   *
+   * Note that the parent element must use "relative" positioning in order for this to work as expected.
+   */
+  overlay?: boolean
   shape?: LoaderShape
   size?: number
   /**
@@ -45,14 +56,16 @@ export const Loader: React.FC<LoaderProps> = React.memo(
     baseColor,
     className,
     innerSize,
+    overlay,
     shape = LoaderShape.DualRing,
     size = 40,
     speed,
     type = StyleTheme.Primary,
   }) => {
     const styles = React.useMemo(
-      () => getStyles({ baseColor, innerSize, shape, size, speed, type }),
-      [baseColor, innerSize, shape, size, speed, type],
+      () =>
+        getStyles({ baseColor, innerSize, overlay, shape, size, speed, type }),
+      [baseColor, innerSize, overlay, shape, size, speed, type],
     )
 
     /**
@@ -65,14 +78,23 @@ export const Loader: React.FC<LoaderProps> = React.memo(
     ])
 
     return (
-      <div
-        className={classNames(styles.loaderWrapper, className)}
-        data-testid={loaderTestIds.loaderWrapper}
-      >
-        <div className={styles.loader}>
-          {childMapper.map((_, idx) => (
-            <div key={idx} />
-          ))}
+      <div className={styles.container} data-testid={loaderTestIds.container}>
+        {overlay && (
+          <div
+            className={styles.backdrop}
+            data-testid={loaderTestIds.backdrop}
+          />
+        )}
+
+        <div
+          className={classNames(styles.wrapper, className)}
+          data-testid={loaderTestIds.wrapper}
+        >
+          <div className={styles.loader}>
+            {childMapper.map((_, idx) => (
+              <div key={idx} />
+            ))}
+          </div>
         </div>
       </div>
     )

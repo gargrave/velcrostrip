@@ -5,7 +5,7 @@ export type RequiredLoaderStylesProps = Required<
 >
 
 export type OptionalLoaderStylesProps = Partial<
-  Pick<LoaderProps, 'baseColor' | 'innerSize' | 'speed'>
+  Pick<LoaderProps, 'baseColor' | 'innerSize' | 'overlay' | 'speed'>
 >
 
 export type LoaderStylesProps = RequiredLoaderStylesProps &
@@ -13,5 +13,4 @@ export type LoaderStylesProps = RequiredLoaderStylesProps &
 
 export type LoaderBuilder = {
   loader: (props: LoaderStylesProps) => string
-  wrapper: (props: LoaderStylesProps) => string
 }

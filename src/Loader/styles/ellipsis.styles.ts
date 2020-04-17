@@ -3,7 +3,7 @@ import { css, keyframes } from 'emotion'
 import { colors } from '../../styles'
 import { LoaderStylesProps, LoaderBuilder } from './loaderStyles.types'
 
-const anim1 = keyframes`  
+const anim1 = keyframes`
   0% {
     transform: scale(0);
   }
@@ -19,12 +19,6 @@ const anim3 = keyframes`
   100% {
     transform: scale(0);
   }
-`
-
-const wrapper = (props: LoaderStylesProps) => css`
-  display: inline-block;
-  height: ${props.size}px;
-  width: ${props.size}px;
 `
 
 const ellipsis = (props: LoaderStylesProps) => {
@@ -92,7 +86,6 @@ const ellipsis = (props: LoaderStylesProps) => {
 
 const builder: LoaderBuilder = {
   loader: ellipsis,
-  wrapper,
 }
 
 export default builder

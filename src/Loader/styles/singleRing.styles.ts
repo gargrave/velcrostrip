@@ -16,12 +16,6 @@ const anim = keyframes`
   }
 `
 
-const wrapper = (props: LoaderStylesProps) => css`
-  display: inline-block;
-  height: ${props.size}px;
-  width: ${props.size}px;
-`
-
 const dualRing = (props: LoaderStylesProps) => {
   const color = props.baseColor ?? colors.theme[props.type]
   const c1 = color
@@ -48,7 +42,6 @@ const dualRing = (props: LoaderStylesProps) => {
 
 const builder: LoaderBuilder = {
   loader: dualRing,
-  wrapper,
 }
 
 export default builder
