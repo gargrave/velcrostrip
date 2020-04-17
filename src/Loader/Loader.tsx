@@ -1,7 +1,8 @@
 import * as React from 'react'
+import { cx } from 'emotion'
 
 import { StyleTheme } from '../styles'
-import { arr, classNames } from '../utils'
+import { arr } from '../utils'
 
 import getStyles from './styles'
 
@@ -79,7 +80,7 @@ export const Loader: React.FC<LoaderProps> = React.memo(
 
     return (
       <div
-        className={classNames(styles.container, className)}
+        className={cx(styles.container, className)}
         data-testid={loaderTestIds.container}
       >
         {overlay && (
