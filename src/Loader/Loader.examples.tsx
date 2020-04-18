@@ -91,13 +91,17 @@ const LoaderShapes = () => (
     <p>In order shown:</p>
     <ul>
       <li>
-        <span className="code">DualRing</span>
+        <span className="code">DualRing</span> (<strong>Primary</strong> style)
       </li>
       <li>
-        <span className="code">SingleRing</span>
+        <span className="code">SingleRing</span> (<strong>Secondary</strong>{' '}
+        style)
       </li>
       <li>
-        <span className="code">Ellipsis</span>
+        <span className="code">Ellipsis</span> (<strong>Success</strong> style)
+      </li>
+      <li>
+        <span className="code">Grid</span> (<strong>Warning</strong> style)
       </li>
     </ul>
 
@@ -106,6 +110,8 @@ const LoaderShapes = () => (
     <Loader shape={LoaderShape.SingleRing} type={StyleTheme.Secondary} />
     <Spacer />
     <Loader shape={LoaderShape.Ellipsis} type={StyleTheme.Success} />
+    <Spacer />
+    <Loader shape={LoaderShape.Grid} type={StyleTheme.Warning} />
   </div>
 )
 

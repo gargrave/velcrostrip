@@ -9,6 +9,7 @@ import getStyles from './styles'
 export enum LoaderShape {
   DualRing = 'dualRing',
   Ellipsis = 'ellipsis',
+  Grid = 'grid',
   SingleRing = 'singleRing',
 }
 
@@ -21,6 +22,7 @@ export const loaderTestIds = {
 const childrenToTypeMap = {
   [LoaderShape.DualRing]: 0,
   [LoaderShape.Ellipsis]: 4,
+  [LoaderShape.Grid]: 9,
   [LoaderShape.SingleRing]: 0,
 }
 

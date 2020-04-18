@@ -4,11 +4,13 @@ import getCoreStyles from './Loader.styles'
 
 import dualRing from './dualRing.styles'
 import ellipsis from './ellipsis.styles'
+import grid from './grid.styles'
 import singleRing from './singleRing.styles'
 
 const shapes: { [key: string]: LoaderBuilder } = {
   dualRing,
   ellipsis,
+  grid,
   singleRing,
 }
 
