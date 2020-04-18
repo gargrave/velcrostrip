@@ -22,7 +22,8 @@
     "release": "yarn build && yarn np --yolo",
     "lint": "eslint --ext .ts,.tsx ./src",
     "test": "jest --watch",
-    "styleguide": "styleguidist server"
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build"
   },
   "license": "MIT",
   "dependencies": {
