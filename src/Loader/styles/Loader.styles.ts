@@ -9,14 +9,16 @@ const container = css`
   ${centeredFlex}
 
   align-items: center;
-  display: flex;
-  height: 100%;
+  display: inline-flex;
   justify-content: center;
-  width: 100%;
 `
 
 const overlayContainer = css`
   ${pinnedAbsolute}
+
+  display: flex;
+  height: 100%;
+  width: 100%;
 `
 
 const wrapper = (props: LoaderStylesProps) => css`

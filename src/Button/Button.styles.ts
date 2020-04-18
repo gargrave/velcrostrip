@@ -35,6 +35,7 @@ const button = () => {
     justify-content: center;
     line-height: ${height};
     padding: 0 0.75em;
+    position: relative;
     text-align: center;
     text-decoration: none;
     transition: all 0.2s;
