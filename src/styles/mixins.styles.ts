@@ -1,12 +1,12 @@
 import { css } from 'emotion'
 
-export const centeredFlex = css`
+export const centeredFlex = () => css`
   align-items: center;
   display: flex;
   justify-content: center;
 `
 
-export const pinnedAbsolute = css`
+export const pinnedAbsolute = () => css`
   height: 100%;
   left: 0;
   position: absolute;

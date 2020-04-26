@@ -6,7 +6,7 @@ import { LoaderStylesProps } from './loaderStyles.types'
 import { centeredFlex, pinnedAbsolute } from '../../styles'
 
 const container = css`
-  ${centeredFlex}
+  ${centeredFlex()}
 
   align-items: center;
   display: inline-flex;
@@ -14,7 +14,7 @@ const container = css`
 `
 
 const overlayContainer = css`
-  ${pinnedAbsolute}
+  ${pinnedAbsolute()}
 
   display: flex;
   height: 100%;

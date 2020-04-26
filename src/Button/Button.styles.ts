@@ -2,6 +2,8 @@ import { css, cx } from 'emotion'
 import { shade, tint, transparentize } from 'polished'
 
 import { colors } from '../styles'
+import { joinCls } from '../utils'
+
 import { ButtonProps } from './Button'
 
 export const DISABLED_OPACITY = 0.65
@@ -166,15 +168,13 @@ const buttonLoader = (props: Props) => css`
 `
 
 export default (props: Props) => {
-  const baseButtonStyles = button()
-
   const state = buttonState(props)
   const theme = themedButton(props)
   const outline = props.outline && outlineButton(props)
   const block = props.block && blockButton()
 
   return {
-    button: [baseButtonStyles, cx(state, theme, outline, block)].join(' '),
+    button: joinCls([button(), cx(state, theme, outline, block)]),
     buttonChildren: buttonChildren(props),
     buttonLoader: buttonLoader(props),
   }

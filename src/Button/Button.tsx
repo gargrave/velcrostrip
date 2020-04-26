@@ -2,6 +2,7 @@ import * as React from 'react'
 
 import { Loader, LoaderShape } from '../Loader'
 import { StyleTheme } from '../styles'
+import { classNames } from '../utils'
 
 import getStyles from './Button.styles'
 
@@ -11,6 +12,7 @@ type ButtonType = 'button' | 'submit' | 'reset'
 export type ButtonProps = {
   block?: boolean
   buttonType?: ButtonType
+  className?: string
   disabled?: boolean
   loading?: boolean
   onClick?: () => void
@@ -23,6 +25,7 @@ export const Button: React.FC<ButtonProps> = React.memo(
     block = false,
     buttonType = 'button',
     children,
+    className,
     disabled = false,
     loading = false,
     onClick,
@@ -36,7 +39,7 @@ export const Button: React.FC<ButtonProps> = React.memo(
 
     return (
       <button
-        className={styles.button}
+        className={classNames(styles.button, className)}
         disabled={disabled || loading}
         onClick={onClick}
         type={buttonType as ButtonType}

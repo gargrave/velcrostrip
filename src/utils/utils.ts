@@ -29,3 +29,6 @@ export const classNames = (...args: ClassNamesArg[]): string => {
 
   return classes.join(' ')
 }
+
+export const joinCls = (classes: string[]) =>
+  classes.filter((_) => !!_).join(' ')
