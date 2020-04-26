@@ -1,5 +1,6 @@
 import * as React from 'react'
-import { cx } from 'emotion'
+
+import { classNames } from '../utils'
 
 import getStyles from './Card.styles'
 
@@ -18,7 +19,7 @@ export const Card: React.FC<CardProps> = ({
   const styles = React.useMemo(() => getStyles({ hoverable }), [hoverable])
 
   return (
-    <div className={cx(styles.card, className)} onClick={onClick}>
+    <div className={classNames(styles.card, className)} onClick={onClick}>
       {children}
     </div>
   )

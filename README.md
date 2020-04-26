@@ -4,6 +4,10 @@ Velcostrip is a general use React component library. The goal is for it to
 include most of the "general" stuff you would need in any typical frontend
 application (and then maybe a bunch of extra goodies, too).
 
+You can see more or less everything in action in the
+[Styleguidist docs](https://gargrave.github.io/velcrostrip/). This will be
+updated each time I release any version bump.
+
 It is based on one of my favorite raw CSS libraries,
 [Shoelace](https://www.shoelace.style/index.html). I love Shoelace, but
 unfortunately its build/customization process is a bit obtuse, so I decided I
