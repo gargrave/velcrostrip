@@ -1,26 +1,14 @@
 import * as React from 'react'
 
-import { classNames } from '../utils'
-
-import getStyles from './Card.styles'
+import { StyledCard } from './Card.styles'
 
 export type CardProps = {
+  children?: React.ReactNode
   className?: string
   hoverable?: boolean
   onClick?: (event: React.MouseEvent<HTMLElement>) => void
 }
 
-export const Card: React.FC<CardProps> = ({
-  children,
-  className,
-  hoverable = false,
-  onClick,
-}) => {
-  const styles = React.useMemo(() => getStyles({ hoverable }), [hoverable])
-
-  return (
-    <div className={classNames(styles.card, className)} onClick={onClick}>
-      {children}
-    </div>
-  )
+export const Card: React.FC<CardProps> = (props) => {
+  return <StyledCard {...props}>{props.children}</StyledCard>
 }

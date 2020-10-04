@@ -1,48 +1,44 @@
-import { css } from 'emotion'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 import { darken, tint } from 'polished'
 
 import { colors } from '../styles'
 import { AlertProps, AlertState } from './Alert'
 
-type Props = Required<Pick<AlertProps, 'transitionTime' | 'type'>>
+const BG_COLOR_OFFSET = 0.75
+const BORDER_COLOR_OFFSET = 0.035
+const TEXT_COLOR_OFFSET = 0.3
 
-type AlertStyles = {
-  alert: string
-  closeButton: string
-}
+type ThemedAlertProps = Required<
+  Pick<AlertProps, 'styleTheme' | 'transitionTime'>
+> &
+  AlertState
 
-const alertBase = css`
-  border-radius: 0.25rem;
-  margin-bottom: 1.5rem;
-  margin-top: 0;
-  padding: 1rem;
-  position: relative;
-`
+export const ThemedAlert = styled.div<ThemedAlertProps>(
+  {
+    borderRadius: '0.25rem',
+    marginBottom: '1.5rem',
+    marginTop: 0,
+    padding: '1rem',
+    position: 'relative',
+  },
+  ({ dismissed, transitionTime, styleTheme }) => {
+    const baseColor = colors.theme[styleTheme]
+    const backgroundColor = tint(BG_COLOR_OFFSET, baseColor)
+    const borderColor = darken(BORDER_COLOR_OFFSET, backgroundColor)
+    const textColor = darken(TEXT_COLOR_OFFSET, baseColor)
 
-const makeAlertStyles = (props: Props, state: AlertState) => {
-  const { transitionTime, type } = props
-  const { dismissed } = state
+    return css`
+      background: ${backgroundColor};
+      border: 1px solid ${borderColor};
+      color: ${textColor};
+      opacity: ${dismissed ? 0 : 1};
+      transition: opacity ${transitionTime}ms ease;
+    `
+  },
+)
 
-  const baseColor = colors.theme[type]
-  const bgOffset = 0.75
-  const borderOffset = 0.035
-  const textOffset = 0.3
-
-  const bgColor = tint(bgOffset, baseColor)
-  const borderColor = darken(borderOffset, bgColor)
-  const textColor = darken(textOffset, baseColor)
-
-  return css`
-    ${alertBase}
-    background-color: ${bgColor};
-    border: 1px solid ${borderColor};
-    color: ${textColor};
-    opacity: ${dismissed ? 0 : 1};
-    transition: opacity ${transitionTime}ms ease;
-  `
-}
-
-const closeButton = css`
+export const AlertCloseButton = styled.button`
   background: transparent;
   border: none;
   color: inherit;
@@ -54,12 +50,3 @@ const closeButton = css`
   right: 0;
   top: 0;
 `
-
-export default (props: Props, state: AlertState): AlertStyles => {
-  const alert = makeAlertStyles(props, state)
-
-  return {
-    alert,
-    closeButton,
-  }
-}

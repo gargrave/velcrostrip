@@ -7,22 +7,22 @@ const handleClick = () => console.log(`Click! ${Date.now()}`)
 
 const ButtonSet = (props: Partial<ButtonProps> = {}) => (
   <>
-    <Button onClick={handleClick} type={StyleTheme.Primary} {...props}>
+    <Button onClick={handleClick} styleTheme={StyleTheme.Primary} {...props}>
       Primary
     </Button>
-    <Button onClick={handleClick} type={StyleTheme.Secondary} {...props}>
+    <Button onClick={handleClick} styleTheme={StyleTheme.Secondary} {...props}>
       Secondary
     </Button>
-    <Button onClick={handleClick} type={StyleTheme.Success} {...props}>
+    <Button onClick={handleClick} styleTheme={StyleTheme.Success} {...props}>
       Success
     </Button>
-    <Button onClick={handleClick} type={StyleTheme.Info} {...props}>
+    <Button onClick={handleClick} styleTheme={StyleTheme.Info} {...props}>
       Info
     </Button>
-    <Button onClick={handleClick} type={StyleTheme.Warning} {...props}>
+    <Button onClick={handleClick} styleTheme={StyleTheme.Warning} {...props}>
       Warning
     </Button>
-    <Button onClick={handleClick} type={StyleTheme.Danger} {...props}>
+    <Button onClick={handleClick} styleTheme={StyleTheme.Danger} {...props}>
       Danger
     </Button>
   </>
@@ -69,7 +69,11 @@ const BlockButtons = () => (
     </p>
     <p>Block-style buttons will fill the width of the container.</p>
     <div>
-      <Button block={true} onClick={handleClick} type={StyleTheme.Primary}>
+      <Button
+        block={true}
+        onClick={handleClick}
+        styleTheme={StyleTheme.Primary}
+      >
         Primary Block
       </Button>
     </div>
@@ -79,13 +83,25 @@ const BlockButtons = () => (
       make the container a flex container.
     </p>
     <div style={{ display: 'flex' }}>
-      <Button block={true} onClick={handleClick} type={StyleTheme.Primary}>
+      <Button
+        block={true}
+        onClick={handleClick}
+        styleTheme={StyleTheme.Primary}
+      >
         Primary Block
       </Button>
-      <Button block={true} onClick={handleClick} type={StyleTheme.Secondary}>
+      <Button
+        block={true}
+        onClick={handleClick}
+        styleTheme={StyleTheme.Secondary}
+      >
         Secondary Block
       </Button>
-      <Button block={true} onClick={handleClick} type={StyleTheme.Success}>
+      <Button
+        block={true}
+        onClick={handleClick}
+        styleTheme={StyleTheme.Success}
+      >
         Success Block
       </Button>
     </div>
@@ -94,7 +110,7 @@ const BlockButtons = () => (
         block={true}
         disabled={true}
         onClick={handleClick}
-        type={StyleTheme.Info}
+        styleTheme={StyleTheme.Info}
       >
         Disabled Info Block
       </Button>
@@ -102,7 +118,7 @@ const BlockButtons = () => (
         block={true}
         disabled={true}
         onClick={handleClick}
-        type={StyleTheme.Warning}
+        styleTheme={StyleTheme.Warning}
       >
         Disabled Warning Block
       </Button>
@@ -110,7 +126,7 @@ const BlockButtons = () => (
         block={true}
         disabled={true}
         onClick={handleClick}
-        type={StyleTheme.Danger}
+        styleTheme={StyleTheme.Danger}
       >
         Disabled Danger Block
       </Button>
@@ -140,7 +156,7 @@ const LoaderButtons = () => {
         <Button onClick={toggleLoading}>Toggle Loading</Button>
       </div>
 
-      <ButtonSet loading={loading} />
+      <ButtonSet showLoader={loading} />
     </>
   )
 }
@@ -148,7 +164,7 @@ const LoaderButtons = () => {
 /**
  * @visibleName Button
  */
-const ButtonExamples: React.FC = React.memo(() => {
+const ButtonExamples: React.FC = () => {
   return (
     <>
       <BasicButtons />
@@ -162,6 +178,6 @@ const ButtonExamples: React.FC = React.memo(() => {
       <LoaderButtons />
     </>
   )
-})
+}
 
 export default ButtonExamples

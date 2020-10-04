@@ -27,11 +27,13 @@ const AlertExamples: React.FC = () => {
     <>
       <h3>Basic themed Alerts</h3>
       <Alert>This is the default alert (Primary).</Alert>
-      <Alert type={StyleTheme.Success}>This is a Success alert.</Alert>
-      <Alert type={StyleTheme.Secondary}>This is a Secondary alert.</Alert>
-      <Alert type={StyleTheme.Info}>This is an Info alert.</Alert>
-      <Alert type={StyleTheme.Warning}>This is a Warning alert.</Alert>
-      <Alert type={StyleTheme.Danger}>This is a Danger alert.</Alert>
+      <Alert styleTheme={StyleTheme.Success}>This is a Success alert.</Alert>
+      <Alert styleTheme={StyleTheme.Secondary}>
+        This is a Secondary alert.
+      </Alert>
+      <Alert styleTheme={StyleTheme.Info}>This is an Info alert.</Alert>
+      <Alert styleTheme={StyleTheme.Warning}>This is a Warning alert.</Alert>
+      <Alert styleTheme={StyleTheme.Danger}>This is a Danger alert.</Alert>
 
       <hr />
       <h3>Dismissable</h3>

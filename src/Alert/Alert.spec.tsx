@@ -1,26 +1,13 @@
+import { act, fireEvent, render, waitFor } from '@testing-library/react'
 import * as React from 'react'
-import '@testing-library/jest-dom/extend-expect'
-import {
-  act,
-  cleanup,
-  fireEvent,
-  render,
-  waitFor,
-} from '@testing-library/react'
 
 import { StyleTheme } from '../styles'
-import {
-  Alert,
-  AlertProps,
-  getAlertTestId,
-  TEST_ID_ALERT_CLOSE_BTN,
-} from './Alert'
+import { Alert, AlertProps, getAlertTestId, getCloseBtnTestId } from './Alert'
 
 let defaultProps: AlertProps
 
 describe('Alert', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
     jest.useFakeTimers()
 
     defaultProps = {
@@ -28,13 +15,11 @@ describe('Alert', () => {
     }
   })
 
-  afterEach(cleanup)
-
   describe('Basic Rendering', () => {
     it('renders correctly', () => {
       const children = 'This is the alert text!'
       const time = 5
-      const testId = getAlertTestId(StyleTheme.Primary)
+      const styleTheme = StyleTheme.Primary
 
       const {
         container,
@@ -43,16 +28,16 @@ describe('Alert', () => {
         getAllByText,
         queryAllByTestId,
       } = render(
-        <Alert {...defaultProps} transitionTime={time}>
+        <Alert {...defaultProps} transitionTime={time} styleTheme={styleTheme}>
           {children}
         </Alert>,
       )
 
       expect(getAllByRole('alert')).toHaveLength(1)
       expect(getAllByText(children)).toHaveLength(1)
-      expect(getAllByTestId(testId)).toHaveLength(1)
+      expect(getAllByTestId(getAlertTestId(styleTheme))).toHaveLength(1)
       // no "close" button by default
-      expect(queryAllByTestId(TEST_ID_ALERT_CLOSE_BTN)).toHaveLength(0)
+      expect(queryAllByTestId(getCloseBtnTestId(styleTheme))).toHaveLength(0)
 
       // confirm styles calculated from props
       expect(container.firstChild).toHaveStyle(
@@ -65,10 +50,12 @@ describe('Alert', () => {
     it('renders a "close" button when "dismissable" is true', async () => {
       const mockOnDismiss = jest.fn()
       const time = 1
+      const styleTheme = StyleTheme.Primary
 
       const { container, getByTestId } = render(
         <Alert
           {...defaultProps}
+          styleTheme={styleTheme}
           dismissable={true}
           onDismiss={mockOnDismiss}
           transitionTime={time}
@@ -82,7 +69,7 @@ describe('Alert', () => {
 
       // trigger close, and ensure "opacity" style gets updated
       expect(container.firstChild).toHaveStyle('opacity: 1')
-      fireEvent.click(getByTestId(TEST_ID_ALERT_CLOSE_BTN))
+      fireEvent.click(getByTestId(getCloseBtnTestId(styleTheme)))
       expect(container.firstChild).toHaveStyle('opacity: 0')
 
       act(() => {

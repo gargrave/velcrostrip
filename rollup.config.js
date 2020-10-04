@@ -30,7 +30,6 @@ export default [
       'react',
       'object-assign',
       'prop-types/checkPropTypes',
-      '@gargrave/garlib',
     ],
     plugins: [
       resolve({

@@ -1,19 +1,24 @@
-import { css, cx } from 'emotion'
+import { css } from '@emotion/core'
+import styled from '@emotion/styled'
 import { shade, tint } from 'polished'
 
-import { boxShadowLight, colors } from '../styles'
-import { joinCls } from '../utils'
-
+import { colors, shadows } from '../styles'
 import { CardProps } from './Card'
-
-type Props = Required<Pick<CardProps, 'hoverable'>>
 
 const bgColor = shade(0.01, colors.base.white)
 const bgColorHover = tint(0.9, colors.theme.primary)
 const borderColor = shade(0.1, bgColor)
 
-const card = () => css`
-  ${boxShadowLight()};
+const hoverableStyles = css`
+  cursor: pointer;
+
+  &:hover {
+    background-color: ${bgColorHover};
+  }
+`
+
+export const StyledCard = styled.div<CardProps>`
+  ${shadows.light};
 
   background: ${bgColor};
   border-radius: 2px;
@@ -24,19 +29,6 @@ const card = () => css`
   & + & {
     margin-top: 8px;
   }
+
+  ${({ hoverable }) => hoverable && hoverableStyles};
 `
-
-const hoverableCard = () => css`
-  &:hover {
-    background-color: ${bgColorHover};
-    cursor: pointer;
-  }
-`
-
-export default (props: Props) => {
-  const hoverable = props.hoverable && hoverableCard()
-
-  return {
-    card: joinCls([card(), cx(hoverable)]),
-  }
-}

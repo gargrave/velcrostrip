@@ -1,25 +1,24 @@
+import styled from '@emotion/styled'
 import * as React from 'react'
-import { css } from 'emotion'
 
 import { Button } from '../Button'
 import { Card } from './Card'
 
-const styles = {
-  title: css`
-    font-size: 1.25rem;
-    font-weight: 500;
-    margin-bottom: 0.5rem;
-  `,
-  title2: css`
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 0;
-  `,
-}
+const CardTitle1 = styled.div`
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+`
+
+const CardTitle2 = styled.div`
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin-bottom: 0;
+`
 
 const BasicCard = () => (
   <Card>
-    <div className={styles.title}>This is a basic Card</div>
+    <CardTitle1>This is a basic Card</CardTitle1>
     <p>
       This is a paragraph within the card that has a lot of great information.
       If you were looking for great information, then you have come to the right
@@ -57,9 +56,9 @@ const HoverableCard = () => (
         console.log(`Card clicked at ${new Date().toDateString()}!`)
       }
     >
-      <div className={styles.title2}>
+      <CardTitle2>
         This card is hoverable! Click it to log something!
-      </div>
+      </CardTitle2>
     </Card>
   </>
 )
@@ -70,18 +69,6 @@ const HoverableCard = () => (
  *
  * There is no "built-in" styling for any children, so you want to be sure that
  * the children you provide have your desired styling already applied to them.
- *
- * e.g. The first example here uses these styles (`emotion`) on the children.
- *
- * ```ts
-  const styles = {
-    title: css`
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin-bottom: .5rem;
-    `,
-  }
- * ```
  *
  * @visibleName Card
  */

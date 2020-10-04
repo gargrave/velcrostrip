@@ -1,58 +1,57 @@
 import * as React from 'react'
 
-import { Loader, LoaderShape } from '../Loader'
+import { LoaderShape } from '../Loader'
 import { StyleTheme } from '../styles'
-import { classNames } from '../utils'
-
-import getStyles from './Button.styles'
-
-type ButtonType = 'button' | 'submit' | 'reset'
+import { ButtonChildren, ButtonLoader, StyledButton } from './Button.styles'
 
 // TODO: button sizes
-export type ButtonProps = {
-  block?: boolean
-  buttonType?: ButtonType
-  className?: string
-  disabled?: boolean
-  loading?: boolean
-  onClick?: () => void
-  outline?: boolean
-  type?: StyleTheme
+type OptionalProps = {
+  block: boolean
+  disabled: boolean
+  nativeButtonType: 'button' | 'submit' | 'reset'
+  outline: boolean
+  showLoader: boolean
+  styleTheme: StyleTheme
 }
 
-export const Button: React.FC<ButtonProps> = React.memo(
-  ({
-    block = false,
-    buttonType = 'button',
-    children,
-    className,
-    disabled = false,
-    loading = false,
-    onClick,
-    outline = false,
-    type = StyleTheme.Primary,
-  }) => {
-    const styles = React.useMemo(
-      () => getStyles({ block, disabled, loading, outline, type }),
-      [block, disabled, loading, outline, type],
-    )
+type RequiredProps = {
+  children: React.ReactNode
+  onClick: () => void
+}
 
-    return (
-      <button
-        className={classNames(styles.button, className)}
-        disabled={disabled || loading}
-        onClick={onClick}
-        type={buttonType as ButtonType}
-      >
-        <span className={styles.buttonChildren}>{children}</span>
-        <Loader
-          baseColor="white"
-          className={styles.buttonLoader}
-          innerSize={3}
-          shape={LoaderShape.SingleRing}
-          size={20}
-        />
-      </button>
-    )
-  },
-)
+export type ButtonProps = Partial<OptionalProps> & RequiredProps
+
+const defaultOptionalProps: OptionalProps = Object.freeze({
+  block: false,
+  disabled: false,
+  nativeButtonType: 'button',
+  outline: false,
+  showLoader: false,
+  styleTheme: StyleTheme.Primary,
+})
+
+export const Button: React.FC<ButtonProps> = (props) => {
+  const { children, nativeButtonType, ...passThruProps } = props
+  const { disabled, showLoader } = passThruProps
+
+  const isDisabled = disabled || showLoader || false
+  const type = nativeButtonType || 'button'
+
+  return (
+    <StyledButton
+      {...defaultOptionalProps}
+      {...passThruProps}
+      disabled={isDisabled}
+      type={type}
+    >
+      <ButtonChildren showLoader={showLoader}>{children}</ButtonChildren>
+      <ButtonLoader
+        baseColor="white"
+        innerSize={3}
+        loaderShape={LoaderShape.SingleRing}
+        loaderSize={20}
+        showLoader={showLoader}
+      />
+    </StyledButton>
+  )
+}

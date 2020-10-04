@@ -1,23 +1,19 @@
+import { fireEvent, render } from '@testing-library/react'
 import * as React from 'react'
-import '@testing-library/jest-dom/extend-expect'
-import { cleanup, fireEvent, render } from '@testing-library/react'
 
 import { loaderTestIds } from '../Loader'
-
-import { DISABLED_OPACITY } from './Button.styles'
 import { Button, ButtonProps } from './Button'
+import { DISABLED_OPACITY } from './Button.styles'
 
 let defaultProps: ButtonProps
 
 describe('Button', () => {
   beforeEach(() => {
-    jest.resetAllMocks()
     defaultProps = {
+      children: null,
       onClick: jest.fn(),
     }
   })
-
-  afterEach(cleanup)
 
   describe('Basic Rendering', () => {
     it('renders correctly with default props', () => {
@@ -64,7 +60,7 @@ describe('Button', () => {
 
     it('applies "submit" type when specified by prop', () => {
       const { container } = render(
-        <Button {...defaultProps} buttonType="submit">
+        <Button {...defaultProps} nativeButtonType="submit">
           Hello There
         </Button>,
       )
@@ -77,7 +73,7 @@ describe('Button', () => {
 
     it('applies "reset" type when specified by prop', () => {
       const { container } = render(
-        <Button {...defaultProps} buttonType="reset">
+        <Button {...defaultProps} nativeButtonType="reset">
           Hello There
         </Button>,
       )
@@ -125,7 +121,7 @@ describe('Button', () => {
     it('renders a loader and hides children when "loading" is true', () => {
       const children = 'Button Text'
       const { container, getByTestId, getByText } = render(
-        <Button {...defaultProps} loading={true}>
+        <Button {...defaultProps} showLoader={true}>
           {children}
         </Button>,
       )

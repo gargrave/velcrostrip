@@ -1,9 +1,9 @@
+import styled from '@emotion/styled'
 import * as React from 'react'
-import { css } from 'emotion'
 
-import { StyleTheme } from '../styles'
 import { Button } from '../Button'
 import { Card } from '../Card'
+import { StyleTheme } from '../styles'
 import { Loader, LoaderShape } from './Loader'
 
 const Spacer = () => <span style={{ marginLeft: 8 }} />
@@ -17,17 +17,17 @@ const BasicLoaders = () => (
       can change this behavior with the <span className="code">overlay</span>{' '}
       prop. (See the example below.)
     </p>
-    <Loader type={StyleTheme.Primary} />
+    <Loader styleTheme={StyleTheme.Primary} />
     <Spacer />
-    <Loader type={StyleTheme.Secondary} />
+    <Loader styleTheme={StyleTheme.Secondary} />
     <Spacer />
-    <Loader type={StyleTheme.Success} />
+    <Loader styleTheme={StyleTheme.Success} />
     <Spacer />
-    <Loader type={StyleTheme.Info} />
+    <Loader styleTheme={StyleTheme.Info} />
     <Spacer />
-    <Loader type={StyleTheme.Warning} />
+    <Loader styleTheme={StyleTheme.Warning} />
     <Spacer />
-    <Loader type={StyleTheme.Danger} />
+    <Loader styleTheme={StyleTheme.Danger} />
   </>
 )
 
@@ -39,17 +39,17 @@ const Sizes = () => (
       of the Loader.
     </p>
     <p>This example shows sizes 16-56 in increments of 8.</p>
-    <Loader type={StyleTheme.Primary} size={16} />
+    <Loader styleTheme={StyleTheme.Primary} loaderSize={16} />
     <Spacer />
-    <Loader type={StyleTheme.Secondary} size={24} />
+    <Loader styleTheme={StyleTheme.Secondary} loaderSize={24} />
     <Spacer />
-    <Loader type={StyleTheme.Success} size={32} />
+    <Loader styleTheme={StyleTheme.Success} loaderSize={32} />
     <Spacer />
-    <Loader type={StyleTheme.Info} size={40} />
+    <Loader styleTheme={StyleTheme.Info} loaderSize={40} />
     <Spacer />
-    <Loader type={StyleTheme.Warning} size={48} />
+    <Loader styleTheme={StyleTheme.Warning} loaderSize={48} />
     <Spacer />
-    <Loader type={StyleTheme.Danger} size={56} />
+    <Loader styleTheme={StyleTheme.Danger} loaderSize={56} />
   </>
 )
 
@@ -68,11 +68,11 @@ const InnerSize = () => (
       based on the wrapper size. In most cases, you are probably safe using the
       default.
     </p>
-    <Loader innerSize={5} type={StyleTheme.Primary} size={20} />
+    <Loader innerSize={5} styleTheme={StyleTheme.Primary} loaderSize={20} />
     <Spacer />
-    <Loader innerSize={3} type={StyleTheme.Success} size={40} />
+    <Loader innerSize={3} styleTheme={StyleTheme.Success} loaderSize={40} />
     <Spacer />
-    <Loader innerSize={2} type={StyleTheme.Info} size={60} />
+    <Loader innerSize={2} styleTheme={StyleTheme.Info} loaderSize={60} />
   </>
 )
 
@@ -105,29 +105,37 @@ const LoaderShapes = () => (
       </li>
     </ul>
 
-    <Loader shape={LoaderShape.DualRing} type={StyleTheme.Primary} />
+    <Loader
+      loaderShape={LoaderShape.DualRing}
+      styleTheme={StyleTheme.Primary}
+    />
     <Spacer />
-    <Loader shape={LoaderShape.SingleRing} type={StyleTheme.Secondary} />
+    <Loader
+      loaderShape={LoaderShape.SingleRing}
+      styleTheme={StyleTheme.Secondary}
+    />
     <Spacer />
-    <Loader shape={LoaderShape.Ellipsis} type={StyleTheme.Success} />
+    <Loader
+      loaderShape={LoaderShape.Ellipsis}
+      styleTheme={StyleTheme.Success}
+    />
     <Spacer />
-    <Loader shape={LoaderShape.Grid} type={StyleTheme.Warning} />
+    <Loader loaderShape={LoaderShape.Grid} styleTheme={StyleTheme.Warning} />
   </div>
 )
 
-const OverlayLoader = () => {
-  const styles = {
-    card: css`
-      margin-top: 16px;
-      position: relative;
-    `,
-    title: css`
-      font-size: 1.25rem;
-      font-weight: 500;
-      margin-bottom: 0.5rem;
-    `,
-  }
+const RelativeCard = styled(Card)`
+  margin-top: 16px;
+  position: relative;
+`
 
+const OverlayTitle = styled.div`
+  font-size: 1.25rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+`
+
+const OverlayLoader = () => {
   const [loading, setLoading] = React.useState(true)
 
   const toggle = () => {
@@ -153,18 +161,16 @@ const OverlayLoader = () => {
 
       <Button onClick={toggle}>Toggle Loader</Button>
 
-      <Card className={styles.card}>
-        <div className={styles.title}>
-          This is a Card with an overlay Loader
-        </div>
+      <RelativeCard>
+        <OverlayTitle>This is a Card with an overlay Loader</OverlayTitle>
 
         <p>
           You can see very clearly that the Loader expands to fill the parent
           and places a backdrop between itself and the parent&apos;s content.
         </p>
 
-        {loading && <Loader overlay={true} size={56} />}
-      </Card>
+        {loading && <Loader overlay={true} loaderSize={56} />}
+      </RelativeCard>
     </div>
   )
 }
@@ -172,7 +178,7 @@ const OverlayLoader = () => {
 /**
  * @visibleName Loader
  */
-const LoaderExamples = () => {
+const LoaderExamples: React.FC = () => {
   return (
     <>
       <BasicLoaders />

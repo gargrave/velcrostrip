@@ -13,6 +13,6 @@
     "noImplicitAny": false,
     "noImplicitThis": false
   },
-  "exclude": ["node_modules", "dist", "**/*.spec.*"],
+  "exclude": ["node_modules", "dist"],
   "includes": ["src"]
 }
