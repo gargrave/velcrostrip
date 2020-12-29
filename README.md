@@ -5,8 +5,8 @@ include most of the "general" stuff you would need in any typical frontend
 application (and then maybe a bunch of extra goodies, too).
 
 You can see more or less everything in action in the
-[Styleguidist docs](https://gargrave.github.io/velcrostrip/). This will be
-updated each time I release any version bump.
+[Styleguide docs](https://gargrave.github.io/velcrostrip/). This will be updated
+each time I release any version bump.
 
 It is based on one of my favorite raw CSS libraries,
 [Shoelace](https://www.shoelace.style/index.html). I love Shoelace, but
@@ -65,10 +65,3 @@ components that are currently available are listed below.
 - Button
 - Card
 - Loader
-
-## TODO
-
-- Host the styleguide/demo
-  - Setup styleguide build process
-- Notes/demos for custom styling/theming
-- Continue importing more loader types

@@ -15,11 +15,12 @@ type OptionalProps = {
 }
 
 type RequiredProps = {
-  children: React.ReactNode
   onClick: () => void
 }
 
-export type ButtonProps = Partial<OptionalProps> & RequiredProps
+export type ButtonProps = React.PropsWithChildren<
+  Partial<OptionalProps> & RequiredProps
+>
 
 const defaultOptionalProps: OptionalProps = Object.freeze({
   block: false,

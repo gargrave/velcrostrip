@@ -127,9 +127,10 @@
     },
 
     {
-      "files": ["*.examples.tsx"],
+      "files": ["*.stories.tsx"],
       "rules": {
-        "no-console": "off"
+        "no-console": "off",
+        "@typescript-eslint/explicit-module-boundary-types": "off"
       }
     }
   ]

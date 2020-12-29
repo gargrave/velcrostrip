@@ -22,8 +22,8 @@
     "release": "yarn build && yarn np --yolo",
     "lint": "eslint --ext .ts,.tsx ./src",
     "test": "jest --watch",
-    "styleguide": "styleguidist server",
-    "styleguide:build": "styleguidist build"
+    "styleguide": "start-storybook -p 6006",
+    "styleguide:build": "build-storybook -o docs"
   },
   "license": "MIT",
   "dependencies": {
@@ -42,9 +42,12 @@
     "@babel/preset-env": "^7.11.5",
     "@babel/preset-react": "^7.10.4",
     "@babel/preset-typescript": "^7.10.4",
+    "@storybook/addon-actions": "^6.1.11",
+    "@storybook/addon-essentials": "^6.1.11",
+    "@storybook/addon-links": "^6.1.11",
+    "@storybook/react": "^6.1.11",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.0.4",
-    "@types/react": "^16.9.50",
     "@typescript-eslint/eslint-plugin": "^4.3.0",
     "@typescript-eslint/parser": "^4.3.0",
     "babel-eslint": "^10.1.0",
@@ -66,7 +69,6 @@
     "react": "^16.13.0",
     "react-docgen-typescript": "^1.20.5",
     "react-dom": "^16.13.0",
-    "react-styleguidist": "^11.1.0",
     "rimraf": "^3.0.2",
     "rollup": "^2.28.2",
     "rollup-plugin-babel": "^4.4.0",

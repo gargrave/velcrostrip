@@ -10,12 +10,13 @@ export const getAlertTestId = (type: StyleTheme): string => `vs-alert--${type}`
 export const getCloseBtnTestId = (type: StyleTheme): string =>
   `${getAlertTestId(type)}__closeBtn`
 
-export type AlertProps = {
+export type AlertProps = React.PropsWithChildren<{
+  // TODO: remove this prop, and just use 'onDismiss' instead
   dismissable?: boolean
   onDismiss?: () => void
   styleTheme?: StyleTheme
   transitionTime?: number
-}
+}>
 
 export type AlertState = {
   dismissed: boolean
@@ -55,6 +56,7 @@ export const Alert: React.FC<AlertProps> = React.memo(
         {...state}
       >
         {children}
+        {/* TODO: this needs to push children aside (e.g. for small screens) */}
         {dismissable && (
           <AlertCloseButton
             aria-label="Close Alert"
