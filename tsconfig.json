@@ -13,6 +13,6 @@
     "noImplicitAny": false,
     "noImplicitThis": false
   },
-  "exclude": ["node_modules", "dist"],
+  "exclude": ["node_modules", "dist", "scaffolder", "scripts"],
   "includes": ["src"]
 }

@@ -1,8 +1,12 @@
 import * as React from 'react'
 
 import { StyleTheme } from '../styles'
-import { noop } from '../utils/noop'
-import { AlertCloseButton, ThemedAlert } from './Alert.styles'
+import {
+  AlertContainer,
+  AlertContent,
+  CloseButton,
+  CloseButtonWrapper,
+} from './Alert.styles'
 
 const DEFAULT_TRANSITION_TIME = 250
 
@@ -11,8 +15,6 @@ export const getCloseBtnTestId = (type: StyleTheme): string =>
   `${getAlertTestId(type)}__closeBtn`
 
 export type AlertProps = React.PropsWithChildren<{
-  // TODO: remove this prop, and just use 'onDismiss' instead
-  dismissable?: boolean
   onDismiss?: () => void
   styleTheme?: StyleTheme
   transitionTime?: number
@@ -26,8 +28,7 @@ export type AlertState = {
 export const Alert: React.FC<AlertProps> = React.memo(
   ({
     children,
-    dismissable,
-    onDismiss = noop,
+    onDismiss,
     styleTheme = StyleTheme.Primary,
     transitionTime = DEFAULT_TRANSITION_TIME,
   }) => {
@@ -35,38 +36,40 @@ export const Alert: React.FC<AlertProps> = React.memo(
       dismissed: false,
       showing: true,
     })
-    const [showing, setShowing] = React.useState(true)
 
-    const handleClick = React.useCallback(() => {
+    const handleCloseClick = React.useCallback(() => {
       if (!onDismiss) return
 
       setState((prev) => ({ ...prev, dismissed: true }))
+
       setTimeout(() => {
-        setShowing(false)
+        setState((prev) => ({ ...prev, showing: false }))
         onDismiss()
       }, transitionTime)
     }, [onDismiss, transitionTime])
 
-    return showing ? (
-      <ThemedAlert
+    return state.showing ? (
+      <AlertContainer
         data-testid={getAlertTestId(styleTheme)}
         role="alert"
-        transitionTime={transitionTime}
         styleTheme={styleTheme}
+        transitionTime={transitionTime}
         {...state}
       >
-        {children}
-        {/* TODO: this needs to push children aside (e.g. for small screens) */}
-        {dismissable && (
-          <AlertCloseButton
-            aria-label="Close Alert"
-            data-testid={getCloseBtnTestId(styleTheme)}
-            onClick={handleClick}
-          >
-            <span aria-hidden="true">&times;</span>
-          </AlertCloseButton>
+        <AlertContent>{children}</AlertContent>
+
+        {onDismiss && (
+          <CloseButtonWrapper>
+            <CloseButton
+              aria-label="Close Alert"
+              data-testid={getCloseBtnTestId(styleTheme)}
+              onClick={handleCloseClick}
+            >
+              <span aria-hidden="true">&times;</span>
+            </CloseButton>
+          </CloseButtonWrapper>
         )}
-      </ThemedAlert>
+      </AlertContainer>
     ) : null
   },
 )

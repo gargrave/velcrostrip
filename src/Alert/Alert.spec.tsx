@@ -55,9 +55,8 @@ describe('Alert', () => {
       const { container, getByTestId } = render(
         <Alert
           {...defaultProps}
-          styleTheme={styleTheme}
-          dismissable={true}
           onDismiss={mockOnDismiss}
+          styleTheme={styleTheme}
           transitionTime={time}
         >
           <div />

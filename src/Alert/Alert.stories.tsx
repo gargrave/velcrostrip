@@ -1,4 +1,5 @@
 import styled from '@emotion/styled'
+import { action } from '@storybook/addon-actions'
 import { Meta, Story } from '@storybook/react'
 import React from 'react'
 
@@ -8,7 +9,6 @@ import { Alert, AlertProps } from './Alert'
 export default {
   argTypes: {
     children: { control: { disable: true } },
-    onDismiss: { action: 'action' },
   },
   component: Alert,
   title: 'Components/Alert',
@@ -55,8 +55,13 @@ export const Dismissable: Story<AlertProps> = (args) => (
       has fully transitioned out.
     </Header>
 
-    <Alert dismissable={true} {...args}>
-      This Alert will go away when you click the button.
+    <Alert {...args} onDismiss={action('Alert Dismissed!')}>
+      <span>This Alert will go away when you click the button.</span>
     </Alert>
+
+    <p>
+      And this is some more stuff underneath the Alert. It will move back into
+      place once the Alert is dismissed.
+    </p>
   </>
 )

@@ -14,7 +14,7 @@ type ThemedAlertProps = Required<
 > &
   AlertState
 
-export const ThemedAlert = styled.div<ThemedAlertProps>(
+export const AlertContainer = styled.div<ThemedAlertProps>(
   {
     borderRadius: '0.25rem',
     marginBottom: '1.5rem',
@@ -38,15 +38,32 @@ export const ThemedAlert = styled.div<ThemedAlertProps>(
   },
 )
 
-export const AlertCloseButton = styled.button`
+export const AlertContent = styled.div`
+  max-width: calc(100% - 2.5rem);
+`
+
+export const CloseButtonWrapper = styled.div`
+  align-items: center;
+  background: transparent;
+  display: flex;
+  height: 100%;
+  justify-content: center;
+  padding: 0 1.25rem;
+  position: absolute;
+  right: 0;
+  top: 0;
+`
+
+export const CloseButton = styled.button`
   background: transparent;
   border: none;
   color: inherit;
   cursor: pointer;
   font-size: 1.5rem;
-  height: 100%;
-  padding: 0 1.25rem;
-  position: absolute;
-  right: 0;
-  top: 0;
+  padding: 0 6px;
+  transition: all 200ms ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.3);
+  }
 `
