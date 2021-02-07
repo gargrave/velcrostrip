@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 import { noop } from '../../utils'
-import { ToastPublicProps } from '../Toast/Toast'
+import { ToastPublicProps } from '../Toast'
 
 export type ToastContextType = {
   showToast: (props: ToastPublicProps) => void
