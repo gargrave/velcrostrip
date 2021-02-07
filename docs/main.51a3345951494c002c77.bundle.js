@@ -5350,11 +5350,12 @@
           marginRight: -5,
           display: 'block',
         },
-        Icon = (0, _theming.styled)(_components.Icons)(sharedStyles, function (
-          _ref,
-        ) {
-          return { color: _ref.theme.color.secondary }
-        }),
+        Icon = (0, _theming.styled)(_components.Icons)(
+          sharedStyles,
+          function (_ref) {
+            return { color: _ref.theme.color.secondary }
+          },
+        ),
         Img = _theming.styled.img(sharedStyles),
         Placeholder = _theming.styled.div(sharedStyles),
         MenuItemIcon = function MenuItemIcon(_ref2) {
@@ -8536,16 +8537,18 @@
           )
         )
       }
-      var TargetContainer = _theming.styled.div(_templateObject(), function (
-          props,
-        ) {
-          return 'hover' === props.mode ? 'default' : 'pointer'
-        }),
-        TargetSvgContainer = _theming.styled.g(_templateObject2(), function (
-          props,
-        ) {
-          return 'hover' === props.mode ? 'default' : 'pointer'
-        }),
+      var TargetContainer = _theming.styled.div(
+          _templateObject(),
+          function (props) {
+            return 'hover' === props.mode ? 'default' : 'pointer'
+          },
+        ),
+        TargetSvgContainer = _theming.styled.g(
+          _templateObject2(),
+          function (props) {
+            return 'hover' === props.mode ? 'default' : 'pointer'
+          },
+        ),
         WithTooltipPure = function WithTooltipPure(_ref) {
           var svg = _ref.svg,
             trigger = _ref.trigger,
@@ -10790,16 +10793,18 @@
             return _react.default.createElement(
               _react.default.Fragment,
               null,
-              _react.default.createElement(ZoomConsumer, null, function (
-                _ref4,
-              ) {
-                var set = _ref4.set,
-                  value = _ref4.value
-                return _react.default.createElement(ZoomWrapper, {
-                  set: set,
-                  value: value,
-                })
-              }),
+              _react.default.createElement(
+                ZoomConsumer,
+                null,
+                function (_ref4) {
+                  var set = _ref4.set,
+                    value = _ref4.value
+                  return _react.default.createElement(ZoomWrapper, {
+                    set: set,
+                    value: value,
+                  })
+                },
+              ),
               _react.default.createElement(_components.Separator, null),
             )
           }),
@@ -11120,48 +11125,49 @@
           __isArgsStory = _context$parameters.__isArgsStory,
           argTypes = _context$parameters.argTypes
         if (!__isArgsStory) return argTypes
-        var withControls = (0, _mapValues.default)(argTypes, function (
-          argType,
-        ) {
-          var control =
-            argType &&
-            argType.type &&
-            (function inferControl(argType) {
-              var type = argType.type
-              if (!type) return null
-              switch (type.name) {
-                case 'array':
-                  var value = type.value
-                  return (null == value ? void 0 : value.name) &&
-                    ['object', 'other'].includes(value.name)
-                    ? {
-                        type: 'object',
-                        validator: function validator(obj) {
-                          return Array.isArray(obj)
-                        },
-                      }
-                    : { type: 'array' }
-                case 'boolean':
-                  return { type: 'boolean' }
-                case 'string':
-                  return { type: 'text' }
-                case 'number':
-                  return { type: 'number' }
-                case 'enum':
-                  var _value = type.value
-                  return (null == _value ? void 0 : _value.length) <= 5
-                    ? { type: 'radio', options: _value }
-                    : { type: 'select', options: _value }
-                case 'function':
-                case 'symbol':
-                case 'void':
-                  return null
-                default:
-                  return { type: 'object' }
-              }
-            })(argType)
-          return control ? { control: control } : void 0
-        })
+        var withControls = (0, _mapValues.default)(
+          argTypes,
+          function (argType) {
+            var control =
+              argType &&
+              argType.type &&
+              (function inferControl(argType) {
+                var type = argType.type
+                if (!type) return null
+                switch (type.name) {
+                  case 'array':
+                    var value = type.value
+                    return (null == value ? void 0 : value.name) &&
+                      ['object', 'other'].includes(value.name)
+                      ? {
+                          type: 'object',
+                          validator: function validator(obj) {
+                            return Array.isArray(obj)
+                          },
+                        }
+                      : { type: 'array' }
+                  case 'boolean':
+                    return { type: 'boolean' }
+                  case 'string':
+                    return { type: 'text' }
+                  case 'number':
+                    return { type: 'number' }
+                  case 'enum':
+                    var _value = type.value
+                    return (null == _value ? void 0 : _value.length) <= 5
+                      ? { type: 'radio', options: _value }
+                      : { type: 'select', options: _value }
+                  case 'function':
+                  case 'symbol':
+                  case 'void':
+                    return null
+                  default:
+                    return { type: 'object' }
+                }
+              })(argType)
+            return control ? { control: control } : void 0
+          },
+        )
         return (0, _parameters.combineParameters)(withControls, argTypes)
       }
     },
@@ -11467,24 +11473,26 @@
         (QueryLink.displayName = 'QueryLink')
       var QueryLocation = function QueryLocation(_ref2) {
         var children = _ref2.children
-        return _react.default.createElement(_router.Location, null, function (
-          _ref3,
-        ) {
-          var location = _ref3.location,
-            path = (0, _utils.queryFromString)(location.search).path,
-            _parsePath = (0, _utils.parsePath)(path),
-            viewMode = _parsePath.viewMode,
-            storyId = _parsePath.storyId,
-            refId = _parsePath.refId
-          return children({
-            path: path,
-            location: location,
-            navigate: queryNavigate,
-            viewMode: viewMode,
-            storyId: storyId,
-            refId: refId,
-          })
-        })
+        return _react.default.createElement(
+          _router.Location,
+          null,
+          function (_ref3) {
+            var location = _ref3.location,
+              path = (0, _utils.queryFromString)(location.search).path,
+              _parsePath = (0, _utils.parsePath)(path),
+              viewMode = _parsePath.viewMode,
+              storyId = _parsePath.storyId,
+              refId = _parsePath.refId
+            return children({
+              path: path,
+              location: location,
+              navigate: queryNavigate,
+              viewMode: viewMode,
+              storyId: storyId,
+              refId: refId,
+            })
+          },
+        )
       }
       ;(exports.Location = QueryLocation),
         (QueryLocation.displayName = 'QueryLocation'),
@@ -11494,18 +11502,22 @@
           targetPath = _ref4.path,
           _ref4$startsWith = _ref4.startsWith,
           startsWith = void 0 !== _ref4$startsWith && _ref4$startsWith
-        return _react.default.createElement(QueryLocation, null, function (
-          _ref5,
-        ) {
-          var urlPath = _ref5.path,
-            rest = _objectWithoutProperties(_ref5, ['path'])
-          return children(
-            Object.assign(
-              { match: (0, _utils.getMatch)(urlPath, targetPath, startsWith) },
-              rest,
-            ),
-          )
-        })
+        return _react.default.createElement(
+          QueryLocation,
+          null,
+          function (_ref5) {
+            var urlPath = _ref5.path,
+              rest = _objectWithoutProperties(_ref5, ['path'])
+            return children(
+              Object.assign(
+                {
+                  match: (0, _utils.getMatch)(urlPath, targetPath, startsWith),
+                },
+                rest,
+              ),
+            )
+          },
+        )
       }
       ;(exports.Match = QueryMatch),
         (QueryMatch.displayName = 'QueryMatch'),
@@ -14444,17 +14456,18 @@
                   : updateGlobals(globals)
               },
             ),
-              fullAPI.on(_coreEvents.SET_STORIES, function handleSetStories(
-                _ref3,
-              ) {
-                var globals = _ref3.globals
-                ;(0, _events.getEventMetadata)(this, fullAPI).ref
-                  ? Object.keys(globals).length > 0 &&
-                    _clientLogger.logger.warn(
-                      'received globals from a non-local ref. This is not currently supported.',
-                    )
-                  : updateGlobals(globals)
-              })
+              fullAPI.on(
+                _coreEvents.SET_STORIES,
+                function handleSetStories(_ref3) {
+                  var globals = _ref3.globals
+                  ;(0, _events.getEventMetadata)(this, fullAPI).ref
+                    ? Object.keys(globals).length > 0 &&
+                      _clientLogger.logger.warn(
+                        'received globals from a non-local ref. This is not currently supported.',
+                      )
+                    : updateGlobals(globals)
+                },
+              )
           },
         }
       }
@@ -31559,21 +31572,23 @@
       })
       exports.ToolRes = ToolRes
       var ToolbarComp = _react.default.memo(function (props) {
-        return _react.default.createElement(_router.Location, null, function (
-          _ref7,
-        ) {
-          var location = _ref7.location,
-            path = _ref7.path,
-            viewMode = _ref7.viewMode
-          return _react.default.createElement(
-            ToolRes,
-            _extends({}, props, {
-              location: location,
-              path: path,
-              viewMode: viewMode,
-            }),
-          )
-        })
+        return _react.default.createElement(
+          _router.Location,
+          null,
+          function (_ref7) {
+            var location = _ref7.location,
+              path = _ref7.path,
+              viewMode = _ref7.viewMode
+            return _react.default.createElement(
+              ToolRes,
+              _extends({}, props, {
+                location: location,
+                path: path,
+                viewMode: viewMode,
+              }),
+            )
+          },
+        )
       })
       exports.ToolbarComp = ToolbarComp
       var Tools = _react.default.memo(function (_ref8) {
@@ -32877,28 +32892,30 @@
           var changeTab = _ref.changeTab,
             id = _ref.id,
             title = _ref.title
-          return _react.default.createElement(_router.Location, null, function (
-            _ref2,
-          ) {
-            var active = _ref2.path.includes('settings/'.concat(id))
-            return _react.default.createElement(
-              _components.TabButton,
-              {
-                id: 'tabbutton-'.concat(id),
-                className: ['tabbutton']
-                  .concat(active ? ['tabbutton-active'] : [])
-                  .join(' '),
-                type: 'button',
-                key: 'id',
-                active: active,
-                onClick: function onClick() {
-                  return changeTab(id)
+          return _react.default.createElement(
+            _router.Location,
+            null,
+            function (_ref2) {
+              var active = _ref2.path.includes('settings/'.concat(id))
+              return _react.default.createElement(
+                _components.TabButton,
+                {
+                  id: 'tabbutton-'.concat(id),
+                  className: ['tabbutton']
+                    .concat(active ? ['tabbutton-active'] : [])
+                    .join(' '),
+                  type: 'button',
+                  key: 'id',
+                  active: active,
+                  onClick: function onClick() {
+                    return changeTab(id)
+                  },
+                  role: 'tab',
                 },
-                role: 'tab',
-              },
-              title,
-            )
-          })
+                title,
+              )
+            },
+          )
         }),
         Content = (0, _theming.styled)(_components.ScrollArea)(
           {
@@ -33852,26 +33869,28 @@
           }).apply(this, arguments)
       }
       var ShortcutsPage = function ShortcutsPage() {
-        return _react.default.createElement(_api.Consumer, null, function (
-          _ref,
-        ) {
-          var _ref$api = _ref.api,
-            getShortcutKeys = _ref$api.getShortcutKeys,
-            setShortcut = _ref$api.setShortcut,
-            restoreDefaultShortcut = _ref$api.restoreDefaultShortcut,
-            restoreAllDefaultShortcuts = _ref$api.restoreAllDefaultShortcuts
-          return _react.default.createElement(
-            _shortcuts.ShortcutsScreen,
-            _extends(
-              { shortcutKeys: getShortcutKeys() },
-              {
-                setShortcut: setShortcut,
-                restoreDefaultShortcut: restoreDefaultShortcut,
-                restoreAllDefaultShortcuts: restoreAllDefaultShortcuts,
-              },
-            ),
-          )
-        })
+        return _react.default.createElement(
+          _api.Consumer,
+          null,
+          function (_ref) {
+            var _ref$api = _ref.api,
+              getShortcutKeys = _ref$api.getShortcutKeys,
+              setShortcut = _ref$api.setShortcut,
+              restoreDefaultShortcut = _ref$api.restoreDefaultShortcut,
+              restoreAllDefaultShortcuts = _ref$api.restoreAllDefaultShortcuts
+            return _react.default.createElement(
+              _shortcuts.ShortcutsScreen,
+              _extends(
+                { shortcutKeys: getShortcutKeys() },
+                {
+                  setShortcut: setShortcut,
+                  restoreDefaultShortcut: restoreDefaultShortcut,
+                  restoreAllDefaultShortcuts: restoreAllDefaultShortcuts,
+                },
+              ),
+            )
+          },
+        )
       }
       ;(exports.ShortcutsPage = ShortcutsPage),
         (ShortcutsPage.displayName = 'ShortcutsPage')
@@ -38316,11 +38335,12 @@
                     _this$_globalMetadata5,
                     sortFn,
                     _this6 = this,
-                    kindOrder = (0, _mapValues.default)(this._kinds, function (
-                      _ref22,
-                    ) {
-                      return _ref22.order
-                    }),
+                    kindOrder = (0, _mapValues.default)(
+                      this._kinds,
+                      function (_ref22) {
+                        return _ref22.order
+                      },
+                    ),
                     storySortParameter =
                       null ===
                         (_this$_globalMetadata4 = this._globalMetadata

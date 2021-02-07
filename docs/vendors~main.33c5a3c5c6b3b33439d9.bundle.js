@@ -1133,16 +1133,15 @@
         stringToPath = function stringToPath(string) {
           var result = []
           return (
-            $replace(string, rePropName, function (
-              match,
-              number,
-              quote,
-              subString,
-            ) {
-              result[result.length] = quote
-                ? $replace(subString, reEscapeChar, '$1')
-                : number || match
-            }),
+            $replace(
+              string,
+              rePropName,
+              function (match, number, quote, subString) {
+                result[result.length] = quote
+                  ? $replace(subString, reEscapeChar, '$1')
+                  : number || match
+              },
+            ),
             result
           )
         },
@@ -4076,46 +4075,46 @@
         requireObjectCoercible = __webpack_require__(67),
         advanceStringIndex = __webpack_require__(254),
         regExpExec = __webpack_require__(176)
-      fixRegExpWellKnownSymbolLogic('match', 1, function (
-        MATCH,
-        nativeMatch,
-        maybeCallNative,
-      ) {
-        return [
-          function match(regexp) {
-            var O = requireObjectCoercible(this),
-              matcher = null == regexp ? void 0 : regexp[MATCH]
-            return void 0 !== matcher
-              ? matcher.call(regexp, O)
-              : new RegExp(regexp)[MATCH](String(O))
-          },
-          function (regexp) {
-            var res = maybeCallNative(nativeMatch, regexp, this)
-            if (res.done) return res.value
-            var rx = anObject(regexp),
-              S = String(this)
-            if (!rx.global) return regExpExec(rx, S)
-            var fullUnicode = rx.unicode
-            rx.lastIndex = 0
-            for (
-              var result, A = [], n = 0;
-              null !== (result = regExpExec(rx, S));
+      fixRegExpWellKnownSymbolLogic(
+        'match',
+        1,
+        function (MATCH, nativeMatch, maybeCallNative) {
+          return [
+            function match(regexp) {
+              var O = requireObjectCoercible(this),
+                matcher = null == regexp ? void 0 : regexp[MATCH]
+              return void 0 !== matcher
+                ? matcher.call(regexp, O)
+                : new RegExp(regexp)[MATCH](String(O))
+            },
+            function (regexp) {
+              var res = maybeCallNative(nativeMatch, regexp, this)
+              if (res.done) return res.value
+              var rx = anObject(regexp),
+                S = String(this)
+              if (!rx.global) return regExpExec(rx, S)
+              var fullUnicode = rx.unicode
+              rx.lastIndex = 0
+              for (
+                var result, A = [], n = 0;
+                null !== (result = regExpExec(rx, S));
 
-            ) {
-              var matchStr = String(result[0])
-              ;(A[n] = matchStr),
-                '' === matchStr &&
-                  (rx.lastIndex = advanceStringIndex(
-                    S,
-                    toLength(rx.lastIndex),
-                    fullUnicode,
-                  )),
-                n++
-            }
-            return 0 === n ? null : A
-          },
-        ]
-      })
+              ) {
+                var matchStr = String(result[0])
+                ;(A[n] = matchStr),
+                  '' === matchStr &&
+                    (rx.lastIndex = advanceStringIndex(
+                      S,
+                      toLength(rx.lastIndex),
+                      fullUnicode,
+                    )),
+                  n++
+              }
+              return 0 === n ? null : A
+            },
+          ]
+        },
+      )
     },
     function (module, exports, __webpack_require__) {
       'use strict'
@@ -5787,149 +5786,148 @@
         floor = Math.floor,
         SUBSTITUTION_SYMBOLS = /\$([$&'`]|\d\d?|<[^>]*>)/g,
         SUBSTITUTION_SYMBOLS_NO_NAMED = /\$([$&'`]|\d\d?)/g
-      fixRegExpWellKnownSymbolLogic('replace', 2, function (
-        REPLACE,
-        nativeReplace,
-        maybeCallNative,
-        reason,
-      ) {
-        var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE =
-            reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE,
-          REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0,
-          UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
-            ? '$'
-            : '$0'
-        return [
-          function replace(searchValue, replaceValue) {
-            var O = requireObjectCoercible(this),
-              replacer = null == searchValue ? void 0 : searchValue[REPLACE]
-            return void 0 !== replacer
-              ? replacer.call(searchValue, O, replaceValue)
-              : nativeReplace.call(String(O), searchValue, replaceValue)
-          },
-          function (regexp, replaceValue) {
-            if (
-              (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE &&
-                REPLACE_KEEPS_$0) ||
-              ('string' == typeof replaceValue &&
-                -1 === replaceValue.indexOf(UNSAFE_SUBSTITUTE))
-            ) {
-              var res = maybeCallNative(
-                nativeReplace,
-                regexp,
-                this,
-                replaceValue,
-              )
-              if (res.done) return res.value
-            }
-            var rx = anObject(regexp),
-              S = String(this),
-              functionalReplace = 'function' == typeof replaceValue
-            functionalReplace || (replaceValue = String(replaceValue))
-            var global = rx.global
-            if (global) {
-              var fullUnicode = rx.unicode
-              rx.lastIndex = 0
-            }
-            for (var results = []; ; ) {
-              var result = regExpExec(rx, S)
-              if (null === result) break
-              if ((results.push(result), !global)) break
-              '' === String(result[0]) &&
-                (rx.lastIndex = advanceStringIndex(
-                  S,
-                  toLength(rx.lastIndex),
-                  fullUnicode,
-                ))
-            }
-            for (
-              var it, accumulatedResult = '', nextSourcePosition = 0, i = 0;
-              i < results.length;
-              i++
-            ) {
-              result = results[i]
-              for (
-                var matched = String(result[0]),
-                  position = max(min(toInteger(result.index), S.length), 0),
-                  captures = [],
-                  j = 1;
-                j < result.length;
-                j++
-              )
-                captures.push(void 0 === (it = result[j]) ? it : String(it))
-              var namedCaptures = result.groups
-              if (functionalReplace) {
-                var replacerArgs = [matched].concat(captures, position, S)
-                void 0 !== namedCaptures && replacerArgs.push(namedCaptures)
-                var replacement = String(
-                  replaceValue.apply(void 0, replacerArgs),
-                )
-              } else
-                replacement = getSubstitution(
-                  matched,
-                  S,
-                  position,
-                  captures,
-                  namedCaptures,
+      fixRegExpWellKnownSymbolLogic(
+        'replace',
+        2,
+        function (REPLACE, nativeReplace, maybeCallNative, reason) {
+          var REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE =
+              reason.REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE,
+            REPLACE_KEEPS_$0 = reason.REPLACE_KEEPS_$0,
+            UNSAFE_SUBSTITUTE = REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE
+              ? '$'
+              : '$0'
+          return [
+            function replace(searchValue, replaceValue) {
+              var O = requireObjectCoercible(this),
+                replacer = null == searchValue ? void 0 : searchValue[REPLACE]
+              return void 0 !== replacer
+                ? replacer.call(searchValue, O, replaceValue)
+                : nativeReplace.call(String(O), searchValue, replaceValue)
+            },
+            function (regexp, replaceValue) {
+              if (
+                (!REGEXP_REPLACE_SUBSTITUTES_UNDEFINED_CAPTURE &&
+                  REPLACE_KEEPS_$0) ||
+                ('string' == typeof replaceValue &&
+                  -1 === replaceValue.indexOf(UNSAFE_SUBSTITUTE))
+              ) {
+                var res = maybeCallNative(
+                  nativeReplace,
+                  regexp,
+                  this,
                   replaceValue,
                 )
-              position >= nextSourcePosition &&
-                ((accumulatedResult +=
-                  S.slice(nextSourcePosition, position) + replacement),
-                (nextSourcePosition = position + matched.length))
-            }
-            return accumulatedResult + S.slice(nextSourcePosition)
-          },
-        ]
-        function getSubstitution(
-          matched,
-          str,
-          position,
-          captures,
-          namedCaptures,
-          replacement,
-        ) {
-          var tailPos = position + matched.length,
-            m = captures.length,
-            symbols = SUBSTITUTION_SYMBOLS_NO_NAMED
-          return (
-            void 0 !== namedCaptures &&
-              ((namedCaptures = toObject(namedCaptures)),
-              (symbols = SUBSTITUTION_SYMBOLS)),
-            nativeReplace.call(replacement, symbols, function (match, ch) {
-              var capture
-              switch (ch.charAt(0)) {
-                case '$':
-                  return '$'
-                case '&':
-                  return matched
-                case '`':
-                  return str.slice(0, position)
-                case "'":
-                  return str.slice(tailPos)
-                case '<':
-                  capture = namedCaptures[ch.slice(1, -1)]
-                  break
-                default:
-                  var n = +ch
-                  if (0 === n) return match
-                  if (n > m) {
-                    var f = floor(n / 10)
-                    return 0 === f
-                      ? match
-                      : f <= m
-                      ? void 0 === captures[f - 1]
-                        ? ch.charAt(1)
-                        : captures[f - 1] + ch.charAt(1)
-                      : match
-                  }
-                  capture = captures[n - 1]
+                if (res.done) return res.value
               }
-              return void 0 === capture ? '' : capture
-            })
-          )
-        }
-      })
+              var rx = anObject(regexp),
+                S = String(this),
+                functionalReplace = 'function' == typeof replaceValue
+              functionalReplace || (replaceValue = String(replaceValue))
+              var global = rx.global
+              if (global) {
+                var fullUnicode = rx.unicode
+                rx.lastIndex = 0
+              }
+              for (var results = []; ; ) {
+                var result = regExpExec(rx, S)
+                if (null === result) break
+                if ((results.push(result), !global)) break
+                '' === String(result[0]) &&
+                  (rx.lastIndex = advanceStringIndex(
+                    S,
+                    toLength(rx.lastIndex),
+                    fullUnicode,
+                  ))
+              }
+              for (
+                var it, accumulatedResult = '', nextSourcePosition = 0, i = 0;
+                i < results.length;
+                i++
+              ) {
+                result = results[i]
+                for (
+                  var matched = String(result[0]),
+                    position = max(min(toInteger(result.index), S.length), 0),
+                    captures = [],
+                    j = 1;
+                  j < result.length;
+                  j++
+                )
+                  captures.push(void 0 === (it = result[j]) ? it : String(it))
+                var namedCaptures = result.groups
+                if (functionalReplace) {
+                  var replacerArgs = [matched].concat(captures, position, S)
+                  void 0 !== namedCaptures && replacerArgs.push(namedCaptures)
+                  var replacement = String(
+                    replaceValue.apply(void 0, replacerArgs),
+                  )
+                } else
+                  replacement = getSubstitution(
+                    matched,
+                    S,
+                    position,
+                    captures,
+                    namedCaptures,
+                    replaceValue,
+                  )
+                position >= nextSourcePosition &&
+                  ((accumulatedResult +=
+                    S.slice(nextSourcePosition, position) + replacement),
+                  (nextSourcePosition = position + matched.length))
+              }
+              return accumulatedResult + S.slice(nextSourcePosition)
+            },
+          ]
+          function getSubstitution(
+            matched,
+            str,
+            position,
+            captures,
+            namedCaptures,
+            replacement,
+          ) {
+            var tailPos = position + matched.length,
+              m = captures.length,
+              symbols = SUBSTITUTION_SYMBOLS_NO_NAMED
+            return (
+              void 0 !== namedCaptures &&
+                ((namedCaptures = toObject(namedCaptures)),
+                (symbols = SUBSTITUTION_SYMBOLS)),
+              nativeReplace.call(replacement, symbols, function (match, ch) {
+                var capture
+                switch (ch.charAt(0)) {
+                  case '$':
+                    return '$'
+                  case '&':
+                    return matched
+                  case '`':
+                    return str.slice(0, position)
+                  case "'":
+                    return str.slice(tailPos)
+                  case '<':
+                    capture = namedCaptures[ch.slice(1, -1)]
+                    break
+                  default:
+                    var n = +ch
+                    if (0 === n) return match
+                    if (n > m) {
+                      var f = floor(n / 10)
+                      return 0 === f
+                        ? match
+                        : f <= m
+                        ? void 0 === captures[f - 1]
+                          ? ch.charAt(1)
+                          : captures[f - 1] + ch.charAt(1)
+                        : match
+                    }
+                    capture = captures[n - 1]
+                }
+                return void 0 === capture ? '' : capture
+              })
+            )
+          }
+        },
+      )
     },
     function (module, exports, __webpack_require__) {
       'use strict'
@@ -9139,35 +9137,35 @@
         requireObjectCoercible = __webpack_require__(67),
         sameValue = __webpack_require__(369),
         regExpExec = __webpack_require__(176)
-      fixRegExpWellKnownSymbolLogic('search', 1, function (
-        SEARCH,
-        nativeSearch,
-        maybeCallNative,
-      ) {
-        return [
-          function search(regexp) {
-            var O = requireObjectCoercible(this),
-              searcher = null == regexp ? void 0 : regexp[SEARCH]
-            return void 0 !== searcher
-              ? searcher.call(regexp, O)
-              : new RegExp(regexp)[SEARCH](String(O))
-          },
-          function (regexp) {
-            var res = maybeCallNative(nativeSearch, regexp, this)
-            if (res.done) return res.value
-            var rx = anObject(regexp),
-              S = String(this),
-              previousLastIndex = rx.lastIndex
-            sameValue(previousLastIndex, 0) || (rx.lastIndex = 0)
-            var result = regExpExec(rx, S)
-            return (
-              sameValue(rx.lastIndex, previousLastIndex) ||
-                (rx.lastIndex = previousLastIndex),
-              null === result ? -1 : result.index
-            )
-          },
-        ]
-      })
+      fixRegExpWellKnownSymbolLogic(
+        'search',
+        1,
+        function (SEARCH, nativeSearch, maybeCallNative) {
+          return [
+            function search(regexp) {
+              var O = requireObjectCoercible(this),
+                searcher = null == regexp ? void 0 : regexp[SEARCH]
+              return void 0 !== searcher
+                ? searcher.call(regexp, O)
+                : new RegExp(regexp)[SEARCH](String(O))
+            },
+            function (regexp) {
+              var res = maybeCallNative(nativeSearch, regexp, this)
+              if (res.done) return res.value
+              var rx = anObject(regexp),
+                S = String(this),
+                previousLastIndex = rx.lastIndex
+              sameValue(previousLastIndex, 0) || (rx.lastIndex = 0)
+              var result = regExpExec(rx, S)
+              return (
+                sameValue(rx.lastIndex, previousLastIndex) ||
+                  (rx.lastIndex = previousLastIndex),
+                null === result ? -1 : result.index
+              )
+            },
+          ]
+        },
+      )
     },
     function (module, exports, __webpack_require__) {
       var Symbol = __webpack_require__(81).Symbol
@@ -11112,25 +11110,24 @@
               area.clear()
             },
             Store: function (id, area, namespace) {
-              var store = _.inherit(_.storeAPI, function (
-                key,
-                data,
-                overwrite,
-              ) {
-                return 0 === arguments.length
-                  ? store.getAll()
-                  : 'function' == typeof data
-                  ? store.transact(key, data, overwrite)
-                  : void 0 !== data
-                  ? store.set(key, data, overwrite)
-                  : 'string' == typeof key || 'number' == typeof key
-                  ? store.get(key)
-                  : 'function' == typeof key
-                  ? store.each(key)
-                  : key
-                  ? store.setAll(key, data)
-                  : store.clear()
-              })
+              var store = _.inherit(
+                _.storeAPI,
+                function (key, data, overwrite) {
+                  return 0 === arguments.length
+                    ? store.getAll()
+                    : 'function' == typeof data
+                    ? store.transact(key, data, overwrite)
+                    : void 0 !== data
+                    ? store.set(key, data, overwrite)
+                    : 'string' == typeof key || 'number' == typeof key
+                    ? store.get(key)
+                    : 'function' == typeof key
+                    ? store.each(key)
+                    : key
+                    ? store.setAll(key, data)
+                    : store.clear()
+                },
+              )
               store._id = id
               try {
                 area.setItem('_-bad-_', 'wolf'),
@@ -14086,12 +14083,12 @@
                       return (
                         -1 !== a.indexOf('-') &&
                           null === a.match(HTML_CUSTOM_ATTR_R) &&
-                          (a = a.replace(CAPTURE_LETTER_AFTER_HYPHEN, function (
-                            a,
-                            b,
-                          ) {
-                            return b.toUpperCase()
-                          })),
+                          (a = a.replace(
+                            CAPTURE_LETTER_AFTER_HYPHEN,
+                            function (a, b) {
+                              return b.toUpperCase()
+                            },
+                          )),
                         a
                       )
                     })(b.slice(0, e)).trim(),
@@ -18306,11 +18303,13 @@
         var nativeCreateObjectURL = NativeURL.createObjectURL,
           nativeRevokeObjectURL = NativeURL.revokeObjectURL
         nativeCreateObjectURL &&
-          redefine(URLConstructor, 'createObjectURL', function createObjectURL(
-            blob,
-          ) {
-            return nativeCreateObjectURL.apply(NativeURL, arguments)
-          }),
+          redefine(
+            URLConstructor,
+            'createObjectURL',
+            function createObjectURL(blob) {
+              return nativeCreateObjectURL.apply(NativeURL, arguments)
+            },
+          ),
           nativeRevokeObjectURL &&
             redefine(
               URLConstructor,
@@ -21969,14 +21968,16 @@
             BaseContext.Consumer,
             null,
             function (baseContext) {
-              return react_default.a.createElement(es_Location, null, function (
-                locationContext,
-              ) {
-                return react_default.a.createElement(
-                  es_RouterImpl,
-                  es_extends({}, baseContext, locationContext, props),
-                )
-              })
+              return react_default.a.createElement(
+                es_Location,
+                null,
+                function (locationContext) {
+                  return react_default.a.createElement(
+                    es_RouterImpl,
+                    es_extends({}, baseContext, locationContext, props),
+                  )
+                },
+              )
             },
           )
         },
@@ -22292,76 +22293,90 @@
           function (_ref5) {
             _ref5.basepath
             var baseuri = _ref5.baseuri
-            return react_default.a.createElement(es_Location, null, function (
-              _ref6,
-            ) {
-              var location = _ref6.location,
-                navigate = _ref6.navigate,
-                to = props.to,
-                state = props.state,
-                replace = props.replace,
-                _props$getProps = props.getProps,
-                getProps = void 0 === _props$getProps ? k : _props$getProps,
-                anchorProps = _objectWithoutProperties(props, [
-                  'to',
-                  'state',
-                  'replace',
-                  'getProps',
-                ]),
-                href = resolve(to, baseuri),
-                encodedHref = encodeURI(href),
-                isCurrent = location.pathname === encodedHref,
-                isPartiallyCurrent = startsWith(location.pathname, encodedHref)
-              return react_default.a.createElement(
-                'a',
-                es_extends(
-                  {
-                    ref: ref || innerRef,
-                    'aria-current': isCurrent ? 'page' : void 0,
-                  },
-                  anchorProps,
-                  getProps({
-                    isCurrent: isCurrent,
-                    isPartiallyCurrent: isPartiallyCurrent,
-                    href: href,
-                    location: location,
-                  }),
-                  {
-                    href: href,
-                    onClick: function onClick(event) {
-                      if (
-                        (anchorProps.onClick && anchorProps.onClick(event),
-                        shouldNavigate(event))
-                      ) {
-                        event.preventDefault()
-                        var shouldReplace = replace
-                        if ('boolean' != typeof replace && isCurrent) {
-                          var _location$state = es_extends({}, location.state),
-                            restState =
-                              (_location$state.key,
-                              _objectWithoutProperties(_location$state, [
-                                'key',
-                              ]))
-                          shouldReplace = (function shallowCompare(obj1, obj2) {
-                            var obj1Keys = Object.keys(obj1)
-                            return (
-                              obj1Keys.length === Object.keys(obj2).length &&
-                              obj1Keys.every(function (key) {
-                                return (
-                                  obj2.hasOwnProperty(key) &&
-                                  obj1[key] === obj2[key]
-                                )
-                              })
-                            )
-                          })(es_extends({}, state), restState)
-                        }
-                        navigate(href, { state: state, replace: shouldReplace })
-                      }
+            return react_default.a.createElement(
+              es_Location,
+              null,
+              function (_ref6) {
+                var location = _ref6.location,
+                  navigate = _ref6.navigate,
+                  to = props.to,
+                  state = props.state,
+                  replace = props.replace,
+                  _props$getProps = props.getProps,
+                  getProps = void 0 === _props$getProps ? k : _props$getProps,
+                  anchorProps = _objectWithoutProperties(props, [
+                    'to',
+                    'state',
+                    'replace',
+                    'getProps',
+                  ]),
+                  href = resolve(to, baseuri),
+                  encodedHref = encodeURI(href),
+                  isCurrent = location.pathname === encodedHref,
+                  isPartiallyCurrent = startsWith(
+                    location.pathname,
+                    encodedHref,
+                  )
+                return react_default.a.createElement(
+                  'a',
+                  es_extends(
+                    {
+                      ref: ref || innerRef,
+                      'aria-current': isCurrent ? 'page' : void 0,
                     },
-                  },
-                ),
-              )
-            })
+                    anchorProps,
+                    getProps({
+                      isCurrent: isCurrent,
+                      isPartiallyCurrent: isPartiallyCurrent,
+                      href: href,
+                      location: location,
+                    }),
+                    {
+                      href: href,
+                      onClick: function onClick(event) {
+                        if (
+                          (anchorProps.onClick && anchorProps.onClick(event),
+                          shouldNavigate(event))
+                        ) {
+                          event.preventDefault()
+                          var shouldReplace = replace
+                          if ('boolean' != typeof replace && isCurrent) {
+                            var _location$state = es_extends(
+                                {},
+                                location.state,
+                              ),
+                              restState =
+                                (_location$state.key,
+                                _objectWithoutProperties(_location$state, [
+                                  'key',
+                                ]))
+                            shouldReplace = (function shallowCompare(
+                              obj1,
+                              obj2,
+                            ) {
+                              var obj1Keys = Object.keys(obj1)
+                              return (
+                                obj1Keys.length === Object.keys(obj2).length &&
+                                obj1Keys.every(function (key) {
+                                  return (
+                                    obj2.hasOwnProperty(key) &&
+                                    obj1[key] === obj2[key]
+                                  )
+                                })
+                              )
+                            })(es_extends({}, state), restState)
+                          }
+                          navigate(href, {
+                            state: state,
+                            replace: shouldReplace,
+                          })
+                        }
+                      },
+                    },
+                  ),
+                )
+              },
+            )
           },
         )
       })
@@ -22444,14 +22459,21 @@
             null,
             function (_ref7) {
               var baseuri = _ref7.baseuri
-              return react_default.a.createElement(es_Location, null, function (
-                locationContext,
-              ) {
-                return react_default.a.createElement(
-                  es_RedirectImpl,
-                  es_extends({}, locationContext, { baseuri: baseuri }, props),
-                )
-              })
+              return react_default.a.createElement(
+                es_Location,
+                null,
+                function (locationContext) {
+                  return react_default.a.createElement(
+                    es_RedirectImpl,
+                    es_extends(
+                      {},
+                      locationContext,
+                      { baseuri: baseuri },
+                      props,
+                    ),
+                  )
+                },
+              )
             },
           )
         },
@@ -22463,24 +22485,26 @@
             null,
             function (_ref9) {
               var baseuri = _ref9.baseuri
-              return react_default.a.createElement(es_Location, null, function (
-                _ref10,
-              ) {
-                var navigate = _ref10.navigate,
-                  location = _ref10.location,
-                  resolvedPath = resolve(path, baseuri),
-                  result = utils_match(resolvedPath, location.pathname)
-                return children({
-                  navigate: navigate,
-                  location: location,
-                  match: result
-                    ? es_extends({}, result.params, {
-                        uri: result.uri,
-                        path: path,
-                      })
-                    : null,
-                })
-              })
+              return react_default.a.createElement(
+                es_Location,
+                null,
+                function (_ref10) {
+                  var navigate = _ref10.navigate,
+                    location = _ref10.location,
+                    resolvedPath = resolve(path, baseuri),
+                    result = utils_match(resolvedPath, location.pathname)
+                  return children({
+                    navigate: navigate,
+                    location: location,
+                    match: result
+                      ? es_extends({}, result.params, {
+                          uri: result.uri,
+                          path: path,
+                        })
+                      : null,
+                  })
+                },
+              )
             },
           )
         },
@@ -23256,14 +23280,12 @@
               ArrayPrototype.reduce &&
                 (reduceCoercesToObject =
                   'object' ==
-                  typeof ArrayPrototype.reduce.call('es5', function (
-                    _,
-                    __,
-                    ___,
-                    list,
-                  ) {
-                    return list
-                  }))
+                  typeof ArrayPrototype.reduce.call(
+                    'es5',
+                    function (_, __, ___, list) {
+                      return list
+                    },
+                  ))
               defineProperties(
                 ArrayPrototype,
                 {
@@ -23308,14 +23330,12 @@
               ArrayPrototype.reduceRight &&
                 (reduceRightCoercesToObject =
                   'object' ==
-                  typeof ArrayPrototype.reduceRight.call('es5', function (
-                    _,
-                    __,
-                    ___,
-                    list,
-                  ) {
-                    return list
-                  }))
+                  typeof ArrayPrototype.reduceRight.call(
+                    'es5',
+                    function (_, __, ___, list) {
+                      return list
+                    },
+                  ))
               defineProperties(
                 ArrayPrototype,
                 {
@@ -24497,23 +24517,25 @@
                     hasCapturingGroups =
                       isRegex(searchValue) && /\)[*?]/.test(searchValue.source)
                   if (isFn && hasCapturingGroups) {
-                    return str_replace.call(this, searchValue, function (
-                      match,
-                    ) {
-                      var length = arguments.length,
-                        originalLastIndex = searchValue.lastIndex
-                      searchValue.lastIndex = 0
-                      var args = searchValue.exec(match) || []
-                      return (
-                        (searchValue.lastIndex = originalLastIndex),
-                        pushCall(
-                          args,
-                          arguments[length - 2],
-                          arguments[length - 1],
-                        ),
-                        replaceValue.apply(this, args)
-                      )
-                    })
+                    return str_replace.call(
+                      this,
+                      searchValue,
+                      function (match) {
+                        var length = arguments.length,
+                          originalLastIndex = searchValue.lastIndex
+                        searchValue.lastIndex = 0
+                        var args = searchValue.exec(match) || []
+                        return (
+                          (searchValue.lastIndex = originalLastIndex),
+                          pushCall(
+                            args,
+                            arguments[length - 2],
+                            arguments[length - 1],
+                          ),
+                          replaceValue.apply(this, args)
+                        )
+                      },
+                    )
                   }
                   return str_replace.call(this, searchValue, replaceValue)
                 })
@@ -25599,12 +25621,13 @@
                 if (!Type.symbol(Symbol.split)) {
                   var symbolSplit = defineWellKnownSymbol('split'),
                     originalSplit = String.prototype.split
-                  defineProperty(RegExp.prototype, symbolSplit, function split(
-                    string,
-                    limit,
-                  ) {
-                    return ES.Call(originalSplit, string, [this, limit])
-                  })
+                  defineProperty(
+                    RegExp.prototype,
+                    symbolSplit,
+                    function split(string, limit) {
+                      return ES.Call(originalSplit, string, [this, limit])
+                    },
+                  )
                   var splitShim = function split(separator, limit) {
                     var O = ES.RequireObjectCoercible(this)
                     if (!isNullOrUndefined(separator)) {
@@ -25629,11 +25652,13 @@
                 if (!symbolMatchExists || stringMatchIgnoresSymbolMatch) {
                   var symbolMatch = defineWellKnownSymbol('match'),
                     originalMatch = String.prototype.match
-                  defineProperty(RegExp.prototype, symbolMatch, function match(
-                    string,
-                  ) {
-                    return ES.Call(originalMatch, string, [this])
-                  })
+                  defineProperty(
+                    RegExp.prototype,
+                    symbolMatch,
+                    function match(string) {
+                      return ES.Call(originalMatch, string, [this])
+                    },
+                  )
                   var matchShim = function match(regexp) {
                     var O = ES.RequireObjectCoercible(this)
                     if (!isNullOrUndefined(regexp)) {
@@ -25741,11 +25766,13 @@
                 }
               if (String.fromCodePoint && 1 !== String.fromCodePoint.length) {
                 var originalFromCodePoint = String.fromCodePoint
-                overrideNative(String, 'fromCodePoint', function fromCodePoint(
-                  codePoints,
-                ) {
-                  return ES.Call(originalFromCodePoint, this, arguments)
-                })
+                overrideNative(
+                  String,
+                  'fromCodePoint',
+                  function fromCodePoint(codePoints) {
+                    return ES.Call(originalFromCodePoint, this, arguments)
+                  },
+                )
               }
               var StringShims = {
                 fromCodePoint: function fromCodePoint(codePoints) {
@@ -26846,14 +26873,16 @@
                 )
                 if (!objectIsExtensibleAcceptsPrimitives) {
                   var originalObjectIsExtensible = Object.isExtensible
-                  overrideNative(Object, 'isExtensible', function isExtensible(
-                    value,
-                  ) {
-                    return (
-                      !!ES.TypeIsObject(value) &&
-                      originalObjectIsExtensible(value)
-                    )
-                  })
+                  overrideNative(
+                    Object,
+                    'isExtensible',
+                    function isExtensible(value) {
+                      return (
+                        !!ES.TypeIsObject(value) &&
+                        originalObjectIsExtensible(value)
+                      )
+                    },
+                  )
                 }
               }
               if (Object.getPrototypeOf) {
@@ -28696,11 +28725,13 @@
                       'has' !== globals.Set.prototype.has.name)
                   ) {
                     var anonymousSetHas = globals.Set.prototype.has
-                    overrideNative(globals.Set.prototype, 'has', function has(
-                      key,
-                    ) {
-                      return _call(anonymousSetHas, this, key)
-                    })
+                    overrideNative(
+                      globals.Set.prototype,
+                      'has',
+                      function has(key) {
+                        return _call(anonymousSetHas, this, key)
+                      },
+                    )
                   }
                 }
                 defineProperties(globals, collectionShims),
@@ -41407,16 +41438,16 @@
           var result = []
           return (
             46 === string.charCodeAt(0) && result.push(''),
-            string.replace(rePropName, function (
-              match,
-              number,
-              quote,
-              subString,
-            ) {
-              result.push(
-                quote ? subString.replace(reEscapeChar, '$1') : number || match,
-              )
-            }),
+            string.replace(
+              rePropName,
+              function (match, number, quote, subString) {
+                result.push(
+                  quote
+                    ? subString.replace(reEscapeChar, '$1')
+                    : number || match,
+                )
+              },
+            ),
             result
           )
         })
@@ -44754,11 +44785,13 @@
                 })
               },
             ),
-            _defineProperty(_assertThisInitialized(_this), 'onSize', function (
-              size,
-            ) {
-              return _this.setState({ size: size })
-            })
+            _defineProperty(
+              _assertThisInitialized(_this),
+              'onSize',
+              function (size) {
+                return _this.setState({ size: size })
+              },
+            )
           props.children, props.render
           var sizeMeConfig = _objectWithoutProperties(props, [
             'children',
@@ -45047,11 +45080,12 @@
                                 onResizeCallback(element)
                             }
                             onReadyCallbacks[id] &&
-                              forEach(onReadyCallbacks[id], function (
-                                callback,
-                              ) {
-                                callback()
-                              })
+                              forEach(
+                                onReadyCallbacks[id],
+                                function (callback) {
+                                  callback()
+                                },
+                              )
                           } else
                             debug &&
                               reporter.log(
@@ -45436,11 +45470,12 @@
                                 )
                               }
                               callback(element.contentDocument)
-                            })(this, function onObjectDocumentReady(
-                              objectDocument,
-                            ) {
-                              callback(element)
-                            })
+                            })(
+                              this,
+                              function onObjectDocumentReady(objectDocument) {
+                                callback(element)
+                              },
+                            )
                         }),
                         browserDetector.isIE() || (object.data = 'about:blank'),
                         getState(element) &&
@@ -45976,11 +46011,12 @@
                     : (debug('Current size not notified, notifying...'),
                       (state.lastNotifiedWidth = state.lastWidth),
                       (state.lastNotifiedHeight = state.lastHeight),
-                      void forEach(getState(element).listeners, function (
-                        listener,
-                      ) {
-                        listener(element)
-                      }))
+                      void forEach(
+                        getState(element).listeners,
+                        function (listener) {
+                          listener(element)
+                        },
+                      ))
                 }
                 function handleScroll() {
                   debug('Scroll detected.'),
@@ -50174,16 +50210,16 @@
                           ) || ['']),
                           this.each(function () {
                             var el = FakejQuery(this)
-                            FakejQuery.each(eventName, function (
-                              i,
-                              oneEventName,
-                            ) {
-                              var oneHandler = function (e) {
-                                handler.call(this, e),
-                                  el.off(oneEventName, oneHandler)
-                              }
-                              el.on(oneEventName, oneHandler)
-                            })
+                            FakejQuery.each(
+                              eventName,
+                              function (i, oneEventName) {
+                                var oneHandler = function (e) {
+                                  handler.call(this, e),
+                                    el.off(oneEventName, oneHandler)
+                                }
+                                el.on(oneEventName, oneHandler)
+                              },
+                            )
                           })
                         )
                       },
@@ -51518,22 +51554,22 @@
                                         return (
                                           each(checks, function (index, check) {
                                             ;(elem = check._elem) &&
-                                              each(check._attrs, function (
-                                                index,
-                                                attr,
-                                              ) {
-                                                ;(curr =
-                                                  ':' === attr.charAt(0)
-                                                    ? elem.is(attr)
-                                                    : elem.attr(attr)),
-                                                  (cache =
-                                                    _updateAutoCache[attr]),
-                                                  checkCache(curr, cache) &&
-                                                    changedAttrs.push(attr),
-                                                  (_updateAutoCache[
-                                                    attr
-                                                  ] = curr)
-                                              })
+                                              each(
+                                                check._attrs,
+                                                function (index, attr) {
+                                                  ;(curr =
+                                                    ':' === attr.charAt(0)
+                                                      ? elem.is(attr)
+                                                      : elem.attr(attr)),
+                                                    (cache =
+                                                      _updateAutoCache[attr]),
+                                                    checkCache(curr, cache) &&
+                                                      changedAttrs.push(attr),
+                                                    (_updateAutoCache[
+                                                      attr
+                                                    ] = curr)
+                                                },
+                                              )
                                           }),
                                           updateViewportAttrsFromTarget(
                                             changedAttrs,
@@ -52669,12 +52705,12 @@
                                   _base.update('auto'),
                                   (_initialized = !0),
                                   dispatchCallback('onInitialized'),
-                                  each(_callbacksInitQeueue, function (
-                                    index,
-                                    value,
-                                  ) {
-                                    dispatchCallback(value.n, value.a)
-                                  }),
+                                  each(
+                                    _callbacksInitQeueue,
+                                    function (index, value) {
+                                      dispatchCallback(value.n, value.a)
+                                    },
+                                  ),
                                   (_callbacksInitQeueue = []),
                                   type(extensions) == TYPES_s &&
                                     (extensions = [extensions]),
@@ -56250,32 +56286,34 @@
                           initOverlayScrollbarsStatics(),
                           pluginTargetElements[LEXICON.l] > 0 &&
                             (optsIsPlainObj
-                              ? FRAMEWORK.each(pluginTargetElements, function (
-                                  i,
-                                  v,
-                                ) {
-                                  ;(inst = v) !== undefined &&
-                                    arr.push(
-                                      OverlayScrollbarsInstance(
-                                        inst,
-                                        options,
-                                        extensions,
-                                        _pluginsGlobals,
-                                        _pluginsAutoUpdateLoop,
-                                      ),
-                                    )
-                                })
-                              : FRAMEWORK.each(pluginTargetElements, function (
-                                  i,
-                                  v,
-                                ) {
-                                  ;(inst = INSTANCES(v)),
-                                    (('!' === options && _plugin.valid(inst)) ||
-                                      (COMPATIBILITY.type(options) == TYPES_f &&
-                                        options(v, inst)) ||
-                                      options === undefined) &&
-                                      arr.push(inst)
-                                }),
+                              ? FRAMEWORK.each(
+                                  pluginTargetElements,
+                                  function (i, v) {
+                                    ;(inst = v) !== undefined &&
+                                      arr.push(
+                                        OverlayScrollbarsInstance(
+                                          inst,
+                                          options,
+                                          extensions,
+                                          _pluginsGlobals,
+                                          _pluginsAutoUpdateLoop,
+                                        ),
+                                      )
+                                  },
+                                )
+                              : FRAMEWORK.each(
+                                  pluginTargetElements,
+                                  function (i, v) {
+                                    ;(inst = INSTANCES(v)),
+                                      (('!' === options &&
+                                        _plugin.valid(inst)) ||
+                                        (COMPATIBILITY.type(options) ==
+                                          TYPES_f &&
+                                          options(v, inst)) ||
+                                        options === undefined) &&
+                                        arr.push(inst)
+                                  },
+                                ),
                             (result = 1 === arr[LEXICON.l] ? arr[0] : arr)),
                           result)
                         : optsIsPlainObj || !options
@@ -64228,44 +64266,45 @@
                 _this.setState({ dragging: !0, dragged: !0 })
               },
             ),
-            _defineProperty(_assertThisInitialized(_this), 'onDrag', function (
-              e,
-              coreData,
-            ) {
-              if (!_this.state.dragging) return !1
-              ;(0, _log.default)('Draggable: onDrag: %j', coreData)
-              var uiData = (0, _positionFns.createDraggableData)(
-                  _assertThisInitialized(_this),
-                  coreData,
-                ),
-                newState = { x: uiData.x, y: uiData.y }
-              if (_this.props.bounds) {
-                var x = newState.x,
-                  y = newState.y
-                ;(newState.x += _this.state.slackX),
-                  (newState.y += _this.state.slackY)
-                var _getBoundPosition2 = _slicedToArray(
-                    (0, _positionFns.getBoundPosition)(
-                      _assertThisInitialized(_this),
-                      newState.x,
-                      newState.y,
-                    ),
-                    2,
+            _defineProperty(
+              _assertThisInitialized(_this),
+              'onDrag',
+              function (e, coreData) {
+                if (!_this.state.dragging) return !1
+                ;(0, _log.default)('Draggable: onDrag: %j', coreData)
+                var uiData = (0, _positionFns.createDraggableData)(
+                    _assertThisInitialized(_this),
+                    coreData,
                   ),
-                  newStateX = _getBoundPosition2[0],
-                  newStateY = _getBoundPosition2[1]
-                ;(newState.x = newStateX),
-                  (newState.y = newStateY),
-                  (newState.slackX = _this.state.slackX + (x - newState.x)),
-                  (newState.slackY = _this.state.slackY + (y - newState.y)),
-                  (uiData.x = newState.x),
-                  (uiData.y = newState.y),
-                  (uiData.deltaX = newState.x - _this.state.x),
-                  (uiData.deltaY = newState.y - _this.state.y)
-              }
-              if (!1 === _this.props.onDrag(e, uiData)) return !1
-              _this.setState(newState)
-            }),
+                  newState = { x: uiData.x, y: uiData.y }
+                if (_this.props.bounds) {
+                  var x = newState.x,
+                    y = newState.y
+                  ;(newState.x += _this.state.slackX),
+                    (newState.y += _this.state.slackY)
+                  var _getBoundPosition2 = _slicedToArray(
+                      (0, _positionFns.getBoundPosition)(
+                        _assertThisInitialized(_this),
+                        newState.x,
+                        newState.y,
+                      ),
+                      2,
+                    ),
+                    newStateX = _getBoundPosition2[0],
+                    newStateY = _getBoundPosition2[1]
+                  ;(newState.x = newStateX),
+                    (newState.y = newStateY),
+                    (newState.slackX = _this.state.slackX + (x - newState.x)),
+                    (newState.slackY = _this.state.slackY + (y - newState.y)),
+                    (uiData.x = newState.x),
+                    (uiData.y = newState.y),
+                    (uiData.deltaX = newState.x - _this.state.x),
+                    (uiData.deltaY = newState.y - _this.state.y)
+                }
+                if (!1 === _this.props.onDrag(e, uiData)) return !1
+                _this.setState(newState)
+              },
+            ),
             _defineProperty(
               _assertThisInitialized(_this),
               'onDragStop',
@@ -79628,11 +79667,12 @@
                   menuRef,
                 ),
                 _extends(
-                  (((_extends2 = {})[refKey] = handleRefs(ref, function (
-                    menuNode,
-                  ) {
-                    menuRef.current = menuNode
-                  })),
+                  (((_extends2 = {})[refKey] = handleRefs(
+                    ref,
+                    function (menuNode) {
+                      menuRef.current = menuNode
+                    },
+                  )),
                   (_extends2.id = elementIdsRef.current.menuId),
                   (_extends2.role = 'listbox'),
                   (_extends2['aria-labelledby'] =
@@ -79709,11 +79749,12 @@
                 suppressRefError =
                   void 0 !== _ref4$suppressRefErro && _ref4$suppressRefErro,
                 toggleProps = _extends(
-                  (((_extends3 = {})[refKey] = handleRefs(ref, function (
-                    toggleButtonNode,
-                  ) {
-                    toggleButtonRef.current = toggleButtonNode
-                  })),
+                  (((_extends3 = {})[refKey] = handleRefs(
+                    ref,
+                    function (toggleButtonNode) {
+                      toggleButtonRef.current = toggleButtonNode
+                    },
+                  )),
                   (_extends3.id = elementIdsRef.current.toggleButtonId),
                   (_extends3['aria-haspopup'] = 'listbox'),
                   (_extends3['aria-expanded'] = latest.current.state.isOpen),
@@ -80317,11 +80358,12 @@
                   menuRef,
                 ),
                 _extends(
-                  (((_extends2 = {})[refKey] = handleRefs(ref, function (
-                    menuNode,
-                  ) {
-                    menuRef.current = menuNode
-                  })),
+                  (((_extends2 = {})[refKey] = handleRefs(
+                    ref,
+                    function (menuNode) {
+                      menuRef.current = menuNode
+                    },
+                  )),
                   (_extends2.id = elementIdsRef.current.menuId),
                   (_extends2.role = 'listbox'),
                   (_extends2['aria-labelledby'] =
@@ -80372,14 +80414,15 @@
                 )
               var customClickHandler = onClick
               return _extends(
-                (((_extends3 = {})[refKey] = handleRefs(ref, function (
-                  itemNode,
-                ) {
-                  itemNode &&
-                    (itemRefs.current[
-                      elementIdsRef.current.getItemId(itemIndex)
-                    ] = itemNode)
-                })),
+                (((_extends3 = {})[refKey] = handleRefs(
+                  ref,
+                  function (itemNode) {
+                    itemNode &&
+                      (itemRefs.current[
+                        elementIdsRef.current.getItemId(itemIndex)
+                      ] = itemNode)
+                  },
+                )),
                 (_extends3.role = 'option'),
                 (_extends3['aria-selected'] =
                   '' + (itemIndex === latestState.highlightedIndex)),
@@ -80423,11 +80466,12 @@
                   'ref',
                 ])
               return _extends(
-                (((_extends4 = {})[refKey] = handleRefs(ref, function (
-                  toggleButtonNode,
-                ) {
-                  toggleButtonRef.current = toggleButtonNode
-                })),
+                (((_extends4 = {})[refKey] = handleRefs(
+                  ref,
+                  function (toggleButtonNode) {
+                    toggleButtonRef.current = toggleButtonNode
+                  },
+                )),
                 (_extends4.id = elementIdsRef.current.toggleButtonId),
                 (_extends4.tabIndex = -1),
                 _extends4),
@@ -80505,11 +80549,12 @@
                 )),
                 (eventHandlers = _eventHandlers))
               return _extends(
-                (((_extends5 = {})[refKey] = handleRefs(ref, function (
-                  inputNode,
-                ) {
-                  inputRef.current = inputNode
-                })),
+                (((_extends5 = {})[refKey] = handleRefs(
+                  ref,
+                  function (inputNode) {
+                    inputRef.current = inputNode
+                  },
+                )),
                 (_extends5.id = elementIdsRef.current.inputId),
                 (_extends5['aria-autocomplete'] = 'list'),
                 (_extends5['aria-controls'] = elementIdsRef.current.menuId),
@@ -80555,11 +80600,12 @@
                   comboboxRef,
                 ),
                 _extends(
-                  (((_extends6 = {})[refKey] = handleRefs(ref, function (
-                    comboboxNode,
-                  ) {
-                    comboboxRef.current = comboboxNode
-                  })),
+                  (((_extends6 = {})[refKey] = handleRefs(
+                    ref,
+                    function (comboboxNode) {
+                      comboboxRef.current = comboboxNode
+                    },
+                  )),
                   (_extends6.role = 'combobox'),
                   (_extends6['aria-haspopup'] = 'listbox'),
                   (_extends6['aria-owns'] = elementIdsRef.current.menuId),
@@ -80930,12 +80976,13 @@
                   'Pass either selectedItem or index in getSelectedItemProps!',
                 )
               return _extends(
-                (((_extends2 = {})[refKey] = handleRefs(ref, function (
-                  selectedItemNode,
-                ) {
-                  selectedItemNode &&
-                    selectedItemRefs.current.push(selectedItemNode)
-                })),
+                (((_extends2 = {})[refKey] = handleRefs(
+                  ref,
+                  function (selectedItemNode) {
+                    selectedItemNode &&
+                      selectedItemRefs.current.push(selectedItemNode)
+                  },
+                )),
                 (_extends2.tabIndex =
                   index === latestState.activeIndex ? 0 : -1),
                 (_extends2.onClick = callAllEventHandlers(
@@ -80988,11 +81035,12 @@
                   dropdownRef,
                 ),
                 _extends(
-                  (((_extends3 = {})[refKey] = handleRefs(ref, function (
-                    dropdownNode,
-                  ) {
-                    dropdownNode && (dropdownRef.current = dropdownNode)
-                  })),
+                  (((_extends3 = {})[refKey] = handleRefs(
+                    ref,
+                    function (dropdownNode) {
+                      dropdownNode && (dropdownRef.current = dropdownNode)
+                    },
+                  )),
                   _extends3),
                   !preventKeyAction && {
                     onKeyDown: callAllEventHandlers(

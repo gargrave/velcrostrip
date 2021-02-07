@@ -8,5 +8,5 @@ export type ToastPosition =
   | 'top-right'
   | 'bottom-right'
 
-export const getPositions = (position: ToastPosition) =>
+export const getPositions = (position: ToastPosition): [YPosition, XPosition] =>
   position.split('-') as [YPosition, XPosition]
